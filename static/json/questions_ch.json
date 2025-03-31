@@ -1,0 +1,124 @@
+{
+   "questions":[
+      {
+        "qid": "d1",
+        "questionType": "text",
+        "question": "起初，（   ）創造天地。（創世記一章1節）",
+        "answers": [
+          "神",
+          "我",
+          "天使"
+        ],
+        "correctAnswer": "神",
+        "media":["/ch/d1.wav"]
+      },
+      {
+        "qid": "d2",
+        "questionType": "text",
+        "question": "神說：「地要生出（   ）來。」（創世記一章24節）",
+        "answers": [
+          "動物",
+          "樹木",
+          "活物"
+        ],
+        "correctAnswer": "活物",
+        "media":["/ch/d2.wav"]
+      },
+      {
+        "qid": "d3",
+        "questionType": "text",
+        "question": "（   ）是他造的。（詩篇一百篇3節）",
+        "answers": [
+          "大家",
+          "我們",
+          "他們"
+        ],
+        "correctAnswer": "我們",
+        "media":["/ch/d3.wav"]
+      },
+      {
+        "qid": "d4",
+        "questionType": "text",
+        "question": "神賜福給（   ），定為聖日。（創世記二章3節）",
+        "answers": [
+          "第一日",
+          "第七日",
+          "第三日"
+        ],
+        "correctAnswer": "第七日",
+        "media":["/ch/d4.wav"]
+      },
+      {
+        "qid": "d5",
+        "questionType": "text",
+        "question": "你要謹守（   ）我所吩咐的一切話。（申命記十二章28節）",
+        "answers": [
+          "分享",
+          "抄寫",
+          "聽從"
+        ],
+        "correctAnswer": "聽從",
+        "media":["/ch/d5.wav"]
+      },
+      {
+        "qid": "d6",
+        "questionType": "text",
+        "question": "惟有聽從我的，必安然居住，得享安靜，不怕（   ）。（箴言一章33節）",
+        "answers": [
+          "災禍",
+          "危險",
+          "困難"
+        ],
+        "correctAnswer": "災禍",
+        "media":["/ch/d6.wav"]
+      },
+      {
+        "qid": "d7",
+        "questionType": "text",
+        "question": "我倚靠神，必不（   ）。（詩篇五十六篇11節）",
+        "answers": [
+          "快樂",
+          "難過",
+          "懼怕"
+        ],
+        "correctAnswer": "懼怕",
+        "media":["/ch/d7.wav"]
+      },
+      {
+        "qid": "d8",
+        "questionType": "text",
+        "question": "神阻擋驕傲的人，賜恩給（   ）的人。（雅各書四章6節）",
+        "answers": [
+          "聰明",
+          "謙卑",
+          "温柔"
+        ],
+        "correctAnswer": "謙卑",
+        "media":["/ch/d8.wav"]
+      },
+      {
+        "qid": "d9",
+        "questionType": "text",
+        "question": "因有一（   ）為我們而生；有一子賜給我們。（以賽亞書九章6節）",
+        "answers": [
+          "嬰孩",
+          "孩子",
+          "小童"
+        ],
+        "correctAnswer": "嬰孩",
+        "media":["/ch/d9.wav"]
+      },
+      {
+        "qid": "d10",
+        "questionType": "text",
+        "question": "在至高之處榮耀歸與（   ）！（路加福音二章14節）",
+        "answers": [
+          "人",
+          "神",
+          "天使"
+        ],
+        "correctAnswer": "神",
+        "media":["/ch/d10.wav"]
+      }
+   ]
+}
