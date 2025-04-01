@@ -52,6 +52,9 @@ export default {
   lang: null,
   firstFall: true,
   engFontSize: null,
+  boxStatus: null,
+  maxBoxes: 4,
+  randomBoxesArea: false,
 
   init(lang = null, gameTime = null, fallSpeed = null, engFontSize=null) {
     //View.showTips('tipsReady');
@@ -114,6 +117,7 @@ export default {
     this.apiManager = State.apiManager;
     this.resetProgressBar();
     this.firstFall = true;
+    this.boxStatus = new Array(this.maxBoxes).fill(false);
   },
 
   handleVisibilityChange() {
@@ -471,24 +475,6 @@ export default {
     optionWrapper.appendChild(option);
 
     requestAnimationFrame(() => {
-      // Calculate the font size based on the container size
-      //const containerHeight = optionWrapper.offsetHeight;
-
-      //let baseFontSize = containerHeight * 0.25;
-      //let baseFontSize = containerHeight * 0.165;
-      //let sizeAdjustment = text.length * 0.2; // Adjust this factor to control how much the text length affects the font size
-      //let minFontSize = containerHeight * 0.05; // Minimum font size as 5% of the container's height
-      //let maxFontSize = containerHeight * (0.4 - text.length * 0.02);
-      //let maxFontSize = containerHeight * (0.1 + text.length * 0.01);
-
-      //let calculatedFontSize = Math.min(Math.max(baseFontSize - sizeAdjustment, minFontSize), maxFontSize);
-      // Set the custom property for font size
-      //option.style.setProperty('--font-size', `${calculatedFontSize}px`);
-      //option.style.setProperty('--line-height', `${calculatedFontSize * 0.9}px`);
-      //let containerWidth = this.optionSize;
-      //let maxFontSize = 50; // Maximum font size in px
-      //let minFontSize = 10; // Minimum font size in px
-      //let fontSize = Math.max(minFontSize, Math.min(maxFontSize, containerWidth / (text.length * 0.7)));
       let fontSize = this.engFontSize;
       let lineHeightMultiplier = 1;
       option.style.fontSize = `${fontSize}px`;
@@ -647,11 +633,26 @@ export default {
     this.answerLength = 1;
     return this.randomizeAnswers(this.randomQuestion.Answers);
   },
+
+  randomizeBoxStatus(numBoxesVisible=4) {
+    this.boxStatus.fill(true);
+    let disableBoxesNumber = this.maxBoxes - numBoxesVisible;
+    const indices = Array.from(Array(this.maxBoxes).keys());
+    for (let i = indices.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [indices[i], indices[j]] = [indices[j], indices[i]]; // Swap
+    }
+    for (let i = 0; i < disableBoxesNumber; i++) {
+        this.boxStatus[indices[i]] = false;
+    }
+  },
+
   setQuestions() {
     this.randomQuestion = this.randQuestion();
     logController.log(this.randomQuestion);
     if (this.randomQuestion === null)
       return;
+    this.randomizeBoxStatus(this.randomQuestion.Answers.length);
 
     this.question = this.randomQuestion.Question;
     this.randomPair = this.randomOptions();

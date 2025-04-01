@@ -2,8 +2,8 @@ import * as posedetection from '@tensorflow-models/pose-detection';
 import State from './state';
 import Sound from './sound';
 import Camera from './camera';
-import Game from './StayToEat';
 import view from './view';
+import Game from './StayToEat';
 
 
 export class RendererCanvas2d {
@@ -22,6 +22,7 @@ export class RendererCanvas2d {
     this.headCircleXScale = 0.9;
     this.headCircleYScale = 1.4;
     this.showSkeleton = false;
+    this.maxBoxes = 4;
   }
 
   draw(rendererParams) {
@@ -192,29 +193,36 @@ export class RendererCanvas2d {
   }
 
   drawBox() {
+    if(Game.boxStatus === null) return;
     const screenWidth = this.videoWidth;
     const screenHeight = this.videoHeight;
-    const boxHeight = screenHeight * 0.95; // Height of the boxes
-    const outerSpace = screenWidth * 0.05; // Space for the outer boxes
-    const middleSpace = screenWidth * 0.15; // Larger space for the middle boxes
-    const totalBoxWidth = (screenWidth - (outerSpace * 2 + middleSpace)) / 4;
+    const boxHeight = screenHeight * 0.95;
+    const outerSpace = screenWidth * 0.05;
+    const middleSpace = screenWidth * 0.15;
+    const totalBoxWidth = (screenWidth - (outerSpace * 2 + middleSpace)) / this.maxBoxes;
+
+    // Create the boxes based on the status
     this.boxes = [
-        { x: 0, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight }, // Left box
-        { x: totalBoxWidth + outerSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight }, // Second box
-        { x: totalBoxWidth * 2 + outerSpace + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight }, // Third box
-        { x: totalBoxWidth * 3 + (outerSpace * 2) + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight } // Right box
+        { x: 0, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[0] },
+        { x: totalBoxWidth + outerSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[1] },
+        { x: totalBoxWidth * 2 + outerSpace + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[2] },
+        { x: totalBoxWidth * 3 + (outerSpace * 2) + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[3] }
     ];
 
+    // Draw the boxes based on their enabled status
     this.boxes.forEach(box => {
-        this.ctx.beginPath();
-        this.ctx.setLineDash([5, 5]); // Set dashed line style
-        this.ctx.rect(box.x, box.y, box.width, box.height);
+        if (box.enable) {
+            this.ctx.beginPath();
+            this.ctx.setLineDash([5, 5]); // Set dashed line style
+            this.ctx.rect(box.x, box.y, box.width, box.height);
 
-        const isTouchedBox = this.touchBox && this.touchBox.x === box.x && this.touchBox.y === box.y && this.touchBox.width === box.width && this.touchBox.height === box.height;
-        this.ctx.strokeStyle = isTouchedBox ? 'red' : '#000000'; // Outline color
-        this.ctx.stroke();
+            const isTouchedBox = this.touchBox && this.touchBox.x === box.x && this.touchBox.y === box.y && this.touchBox.width === box.width && this.touchBox.height === box.height;
+            this.ctx.strokeStyle = isTouchedBox ? 'red' : '#000000'; // Outline color
+            this.ctx.stroke();
+        }
     });
-}
+  }
+
 
   /*drawBox(isCurPoseValid) {
     this.ctx.beginPath();
