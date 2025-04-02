@@ -5,7 +5,7 @@ import QuestionManager from './question';
 import { logController } from './logController';
 
 export default {
-  fallingId: 0,
+  createdOptionId: 0,
   questionType: null,
   randomQuestion: null,
   question: '',
@@ -55,12 +55,13 @@ export default {
   boxStatus: null,
   maxBoxes: 4,
   randomBoxesArea: false,
+  boxesArea: null,
 
-  init(lang = null, gameTime = null, fallSpeed = null, engFontSize=null) {
+  init(lang = null, gameTime = null, fallSpeed = null, engFontSize = null) {
     //View.showTips('tipsReady');
     this.lang = lang;
     this.startedGame = false;
-    this.fallingId = 0;
+    this.createdOptionId = 0;
     this.remainingTime = gameTime !== null ? gameTime : 120;
     this.fallingSpeed = fallSpeed !== null ? fallSpeed : 6;
     this.engFontSize = engFontSize !== null ? engFontSize : 30;
@@ -118,6 +119,7 @@ export default {
     this.resetProgressBar();
     this.firstFall = true;
     this.boxStatus = new Array(this.maxBoxes).fill(false);
+    this.boxesArea = [];
   },
 
   handleVisibilityChange() {
@@ -292,26 +294,19 @@ export default {
             this.firstFall = false;
           }
           if (this.fallingItems.length < this.randomPair.length) {
-            if (this.fallingId < this.fallingItems.length) {
-              this.fallingId += 1;
+            if (this.createdOptionId < this.fallingItems.length) {
+              this.createdOptionId += 1;
             } else {
-              this.fallingId = 0;
+              this.createdOptionId = 0;
             }
-            var optionImageId = this.fallingId % View.preloadedFallingImages.length;
-            this.createRandomItem(this.randomPair[this.fallingId], View.preloadedFallingImages[optionImageId]);
+            var optionImageId = this.createdOptionId % View.preloadedFallingImages.length;
+            this.createRandomItem(this.randomPair[this.createdOptionId], View.preloadedFallingImages[optionImageId]);
           }
           else {
             this.finishedCreateOptions = true;
             //logController.log("finished created all");
           }
         }
-        /*else {
-          if (this.reFallingItems.length > 0) {
-            let refallingItem = this.reFallingItems[0];
-            this.resetFallingItem(refallingItem);
-            this.reFallingItems.splice(0, 1);
-          }
-        }*/
         this.lastFallingTime = timestamp;
       }
 
@@ -376,13 +371,24 @@ export default {
     return Math.random().toString(16).slice(2);
   },
   createRandomItem(char, optionImage) {
-    if (char && char.length !== 0) {
-      const columnId = this.getNextSordOrder();
+    if (char && char.length !== 0 && this.boxesArea.length !== 0) {
+      console.log(this.boxesArea);
+      const enabledBoxes = this.boxesArea.filter((box, index) => this.boxStatus[index]);
+      if (enabledBoxes.length === 0) {
+        console.warn("No enabled boxes available.");
+        return;
+      }
+
+      if (!this.createdOptionId || this.createdOptionId >= enabledBoxes.length) {
+        this.createdOptionId = 0;
+      }
+      const selectedBox = enabledBoxes[this.createdOptionId];
+
       const word = char;
       const generatePosition = () => {
-        const x = this.generatePositionX(columnId);
+        const x = selectedBox.x;
         const id = this.generateUniqueId();
-        const optionWrapper = this.createOptionWrapper(word, id, optionImage, columnId);
+        const optionWrapper = this.createOptionWrapper(word, id, optionImage, this.createdOptionId);
         const newFallingItem = {
           x,
           size: this.optionSize,
@@ -390,6 +396,7 @@ export default {
           optionWrapper,
           id,
         };
+        this.createdOptionId++;
         return newFallingItem;
       };
 
@@ -451,7 +458,6 @@ export default {
     optionWrapper.setAttribute('column', columnId);
     let option = document.createElement('span');
     option.classList.add('option');
-    option.classList.add('fixedText');
     let formattedText = '';
 
     switch (this.lang) {
@@ -490,15 +496,14 @@ export default {
     View.optionArea.appendChild(item.optionWrapper);
     item.optionWrapper.classList.add("show");
     item.optionWrapper.style.left = item.x + 'px';
+    /*item.optionWrapper.style.setProperty('--bottom-height', `${(300)}px`);*/
     /*item.optionWrapper.style.setProperty('--top-height', `${0}px`);*/
-    item.optionWrapper.style.setProperty('--bottom-height', `${(View.canvas.height + this.optionSize)}px`);
-    item.optionWrapper.style.setProperty('--fallingSpeed', `${this.fallingSpeed}s`);
-    item.optionWrapper.addEventListener('animationend', () => this.animationEnd(item.optionWrapper));
+    /*item.optionWrapper.style.setProperty('--fallingSpeed', `${this.fallingSpeed}s`);
+    item.optionWrapper.addEventListener('animationend', () => this.animationEnd(item.optionWrapper));*/
   },
 
-  animationEnd(optionWrapper) {
+  /*animationEnd(optionWrapper) {
     this.reFallingItems.push(optionWrapper);
-    //logController.log("re falling item", this.reFallingItems);
     if (this.reFallingItems.length > 0) {
       let refallingItem = this.reFallingItems[0];
       this.resetFallingItem(refallingItem);
@@ -533,7 +538,7 @@ export default {
       childSpan.classList.add('fixedText');
       optionWrapper.classList.add('show');
     }, delay);
-  },
+  },*/
 
   refallingDelay() {
     let itemLength;
@@ -634,16 +639,16 @@ export default {
     return this.randomizeAnswers(this.randomQuestion.Answers);
   },
 
-  randomizeBoxStatus(numBoxesVisible=4) {
+  randomizeBoxStatus(numBoxesVisible = 4) {
     this.boxStatus.fill(true);
     let disableBoxesNumber = this.maxBoxes - numBoxesVisible;
     const indices = Array.from(Array(this.maxBoxes).keys());
     for (let i = indices.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [indices[i], indices[j]] = [indices[j], indices[i]]; // Swap
+      const j = Math.floor(Math.random() * (i + 1));
+      [indices[i], indices[j]] = [indices[j], indices[i]]; // Swap
     }
     for (let i = 0; i < disableBoxesNumber; i++) {
-        this.boxStatus[indices[i]] = false;
+      this.boxStatus[indices[i]] = false;
     }
   },
 
@@ -759,25 +764,6 @@ export default {
     }
 
     logController.log("this.randomQuestion.answers", this.randomQuestion.Answers);
-    /*if (this.randomQuestion.answers === undefined) {
-      let resetBtn = document.createElement('div');
-      resetBtn.classList.add('resetBtn');
-
-      switch (this.randomQuestion.type) {
-        case 'Spelling':
-          resetBtn.classList.add('resetTextType');
-          break;
-        case 'Audio':
-          resetBtn.classList.add('resetAudioType');
-          break;
-        case 'FillingBlank':
-        case 'Reorder':
-        case 'Picture':
-          resetBtn.classList.add('resetPictureType');
-          break;
-      }
-      View.stageImg.appendChild(resetBtn);
-    }*/
 
     this.answerTextField.classList.add('answerWrapper');
     this.answerWrapper = document.createElement('span');
@@ -787,6 +773,12 @@ export default {
     View.stageImg.appendChild(this.answerTextField);
     View.stageImg.classList.add('fadeIn');
     View.stageImg.style.opacity = 1;
+
+    for (let i = 0; i < this.randomPair.length; i++) {
+      var optionImageId = i % View.preloadedFallingImages.length;
+      this.createRandomItem(this.randomPair[i], View.preloadedFallingImages[optionImageId]);
+    }
+
   },
 
   adjustAnswerTextFontSize(answer) {
@@ -838,7 +830,7 @@ export default {
       this.fallingItems.splice(0);
       this.reFallingItems.splice(0);
       View.optionArea.innerHTML = '';
-      this.fallingId = 0;
+      this.createdOptionId = 0;
       //logController.log("::::::::::::::::::::::::::::", this.typedItems);
     }
   },
@@ -888,8 +880,8 @@ export default {
           option.style.setProperty('--bounce-bottom-angle', `${bounceBottomAngle}deg`);
           option.style.setProperty('--bounce-speed', `${1}s`)
           option.classList.remove('show');
-          const childSpan = option.querySelector('.option');
-          childSpan.classList.remove('fixedText');
+          // const childSpan = option.querySelector('.option');
+          //childSpan.classList.remove('fixedText');
           option.classList.add('showBonunce');
 
           // logController.log("deduct:", option);
@@ -944,7 +936,7 @@ export default {
   clearWrapper() {
     this.firstFall = true;
     this.finishedCreateOptions = false;
-    this.fallingId = 0;
+    this.createdOptionId = 0;
     this.leftCount = 0;
     this.rightCount = 0;
     this.answerTextField.classList.remove('correct');
@@ -958,7 +950,7 @@ export default {
   },
   clearOption() {
     this.firstFall = true;
-    this.fallingId = 0;
+    this.createdOptionId = 0;
     this.leftCount = 0;
     this.rightCount = 0;
     this.fillwordTime = 0;

@@ -27,6 +27,7 @@
   position: relative;
   display: inline-block;
   left: 0px;
+  bottom: calc(min(-25vw, -25vw));
   background-color: rgba(255, 255, 255, 0.5);
   border-radius: 50%;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 1));
@@ -274,9 +275,9 @@ font-size: calc(min(7vh, 7vw));
   display: flex;
   justify-content: center;
   align-items: center;
-  animation-name: fallingAnimation;
+  /*animation-name: fallingAnimation;
   animation-duration: var(--fallingSpeed);
-  animation-timing-function: linear;
+  animation-timing-function: linear;*/
   transform: scale(1);
 }
 

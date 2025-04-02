@@ -22,12 +22,12 @@ let inferenceTimeSum = 0, lastPanelUpdate = 0;
 const previewImageEng = require('./images/StayToEat/preview.png');
 const previewImageCh = require('./images/headToWin/mhead_preview_ch.png');
 const headImages = [
-  require("./images/headToWin/helmet.png"),
+  require("./images/StayToEat/funny_mask.png"),
   require("./images/headToWin/helmet_ch.png")
 ];
 const bgImage = require('./images/StayToEat/bg.png');
 const fpsDebug = document.getElementById('stats');
-let { jwt, id, levelKey, model, removal, fps, gameTime, fallSpeed, lang, engFontSize} = parseUrlParams();
+let { jwt, id, levelKey, model, removal, fps, gameTime, fallSpeed, lang, engFontSize } = parseUrlParams();
 let holdTimeout;
 let previewImageUrl = null;
 //const ctx = canvas.getContext('2d');
