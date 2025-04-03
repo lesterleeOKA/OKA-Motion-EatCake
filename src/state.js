@@ -115,6 +115,9 @@ export default {
           break;
         case 'showQstImg':
           this.changeState('playing', 'waitAns');
+          break;
+        case 'checkingQuestion':
+          break;
         case 'waitAns':
           View.hidePrepareBoard();
           Game.startCountTime();
@@ -124,7 +127,6 @@ export default {
             Sound.stopAll(['bgm', 'lastTen']);
             Sound.play('ansWrong');
           }
-          this.changeState('playing', 'waitAns');
           setTimeout(() => {
             this.setPoseState('selectedImg', '');
             if (state === 'playing')
@@ -136,7 +138,6 @@ export default {
             Sound.stopAll(['bgm', 'lastTen']);
             Sound.play('ansCorrect');
           }
-          this.changeState('playing', 'waitAns');
           setTimeout(() => {
             this.setPoseState('selectedImg', '');
             if (state === 'playing')

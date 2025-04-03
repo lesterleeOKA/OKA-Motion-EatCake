@@ -22,7 +22,7 @@ let inferenceTimeSum = 0, lastPanelUpdate = 0;
 const previewImageEng = require('./images/StayToEat/preview.png');
 const previewImageCh = require('./images/headToWin/mhead_preview_ch.png');
 const headImages = [
-  require("./images/StayToEat/funny_mask.png"),
+  require("./images/StayToEat/nose.png"),
   require("./images/headToWin/helmet_ch.png")
 ];
 const bgImage = require('./images/StayToEat/bg.png');

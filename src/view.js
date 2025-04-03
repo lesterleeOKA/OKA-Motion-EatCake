@@ -373,10 +373,11 @@ export default {
       this.headTracker.src = imgUrl;
     }
   },
-  showHeadTracker(status, width = null, left = null, top = null) {
+  showHeadTracker(status, width = null, left = null, top = null, rotation = 0) {
     if (width) this.headTracker.style.width = width;
     if (left) this.headTracker.style.left = left;
     if (top) this.headTracker.style.top = top;
+    this.headTracker.style.transform = `rotate(${rotation}deg)`;
     this.headTracker.style.display = status ? 'block' : 'none';
   },
 

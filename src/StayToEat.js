@@ -14,14 +14,12 @@ export default {
   time: 0,
   remainingTime: 0,
   fallingSpeed: 0,
-  optionSize: 0,
   fallingOption: null,
   timer: null,
   timerRunning: false,
   nextQuestion: true,
   randomPair: [],
-  fallingItems: [],
-  reFallingItems: [],
+  objectItems: [],
   typedItems: [],
   randomQuestionId: 0,
   answeredNum: 0,
@@ -78,8 +76,7 @@ export default {
     this.nextQuestion = true;
     this.addScore(0);
     this.randomPair = [];
-    this.fallingItems = [];
-    this.reFallingItems = [];
+    this.objectItems = [];
     this.typedItems = [];
     this.stopCountTime();
     this.fillwordTime = 0;
@@ -91,7 +88,6 @@ export default {
     this.answeredNum = 0;
     this.correctedAnswerNumber = 0;
     this.answerLength = 0;
-    this.optionSize = View.canvas.width / 6.5;
     this.redBoxX = View.canvas.width / 3;
     this.redBoxY = (View.canvas.height / 5) * 3;
     this.redBoxWidth = View.canvas.width / 3;
@@ -293,8 +289,8 @@ export default {
             this.selectedCount = this.getRandomInt(-1, this.numberOfColumns - 1);
             this.firstFall = false;
           }
-          if (this.fallingItems.length < this.randomPair.length) {
-            if (this.createdOptionId < this.fallingItems.length) {
+          if (this.objectItems.length < this.randomPair.length) {
+            if (this.createdOptionId < this.objectItems.length) {
               this.createdOptionId += 1;
             } else {
               this.createdOptionId = 0;
@@ -370,9 +366,12 @@ export default {
   generateUniqueId() {
     return Math.random().toString(16).slice(2);
   },
+  createPlate(){
+
+  },
   createRandomItem(char, optionImage) {
     if (char && char.length !== 0 && this.boxesArea.length !== 0) {
-      console.log(this.boxesArea);
+      //console.log(this.boxesArea);
       const enabledBoxes = this.boxesArea.filter((box, index) => this.boxStatus[index]);
       if (enabledBoxes.length === 0) {
         console.warn("No enabled boxes available.");
@@ -386,23 +385,25 @@ export default {
 
       const word = char;
       const generatePosition = () => {
-        const x = selectedBox.x;
+        const x = selectedBox.x + selectedBox.width * 0.093;
+        const size = selectedBox.width * 0.8;
         const id = this.generateUniqueId();
-        const optionWrapper = this.createOptionWrapper(word, id, optionImage, this.createdOptionId);
-        const newFallingItem = {
+        const optionWrapper = this.createOptionWrapper(word, id, size, optionImage, this.createdOptionId);
+
+        const newObjectItem = {
           x,
-          size: this.optionSize,
+          size: size,
           img: optionImage,
           optionWrapper,
           id,
         };
         this.createdOptionId++;
-        return newFallingItem;
+        return newObjectItem;
       };
 
-      const newFallingItem = generatePosition();
-      this.fallingItems.push(newFallingItem);
-      this.renderFallingItem(newFallingItem);
+      const newObjectItem = generatePosition();
+      this.objectItems.push(newObjectItem);
+      this.renderItem(newObjectItem);
     }
   },
   getNextSordOrder() {
@@ -440,15 +441,14 @@ export default {
       }
     }
   },
-
   getRandomInt(min, max) {
     return Math.floor(Math.random() * (max - min)) + min;
   },
-  createOptionWrapper(text, id, optionImage, columnId) {
+  createOptionWrapper(text, id, size, optionImage, columnId) {
     let optionWrapper = document.createElement('div');
     optionWrapper.classList.add('optionWrapper');
-    optionWrapper.style.width = `${this.optionSize}px`;
-    optionWrapper.style.height = `${this.optionSize}px`;
+    optionWrapper.style.width = `${size}px`;
+    optionWrapper.style.height = `${size}px`;
     if (optionImage !== '' && optionImage !== 'undefined') {
       //logController.log("created option image url:", optionImage);
       optionWrapper.style.backgroundImage = `url(${optionImage})`;
@@ -492,83 +492,31 @@ export default {
     const randomIndex = Math.floor(Math.random() * string.length);
     return string[randomIndex];
   },
-  renderFallingItem(item) {
+  renderItem(item) {
     View.optionArea.appendChild(item.optionWrapper);
     item.optionWrapper.classList.add("show");
     item.optionWrapper.style.left = item.x + 'px';
-    /*item.optionWrapper.style.setProperty('--bottom-height', `${(300)}px`);*/
-    /*item.optionWrapper.style.setProperty('--top-height', `${0}px`);*/
-    /*item.optionWrapper.style.setProperty('--fallingSpeed', `${this.fallingSpeed}s`);
-    item.optionWrapper.addEventListener('animationend', () => this.animationEnd(item.optionWrapper));*/
   },
-
-  /*animationEnd(optionWrapper) {
-    this.reFallingItems.push(optionWrapper);
-    if (this.reFallingItems.length > 0) {
-      let refallingItem = this.reFallingItems[0];
-      this.resetFallingItem(refallingItem);
-      this.reFallingItems.splice(0, 1);
-    }
+  renderPlateItem(size, positionX) {
+    var plate = document.createElement('div');
+    plate.classList.add("optionPlate");
+    View.optionArea.appendChild(plate);
+    plate.style.width = size + 'px';
+    plate.style.height = size + 'px';
+    plate.style.left = positionX + 'px';
   },
-
-  resetFallingItem(optionWrapper) {
-    optionWrapper.classList.remove('show');
-    const childSpan = optionWrapper.querySelector('.option');
-    childSpan.classList.remove('fixedText');
-
-    if (this.nextQuestion || State.stateType === 'ansWrong')
-      return;
-
-    let currentColumnId = parseInt(optionWrapper.getAttribute('column'));
-    if (currentColumnId < this.numberOfColumns - 1) {
-      currentColumnId += 1;
-    }
-    else {
-      currentColumnId = 0;
-    }
-    let delay = this.refallingDelay();
-    //logController.log("delay", delay, itemLength);
-    setTimeout(() => {
-      optionWrapper.x = this.generatePositionX(currentColumnId);
-      optionWrapper.setAttribute('column', currentColumnId);
-      optionWrapper.style.left = optionWrapper.x + 'px';
-      optionWrapper.style.setProperty('--bottom-height', `${(View.canvas.height + this.optionSize)}px`);
-      optionWrapper.style.setProperty('--fallingSpeed', `${this.fallingSpeed}s`);
-      const childSpan = optionWrapper.querySelector('.option');
-      childSpan.classList.add('fixedText');
-      optionWrapper.classList.add('show');
-    }, delay);
-  },*/
-
-  refallingDelay() {
-    let itemLength;
-
-    if (this.finishedCreateOptions) {
-      itemLength = this.fallingItems.length;
-    }
-    else {
-      itemLength = this.randomPair.length;
-    }
-    let delay = 0;
-
-    if (itemLength > 1) {
-      delay = itemLength * this.itemDelay;
-    }
-    return delay;
-  },
-
-  removeFallingItem(item) {
-    const index = this.fallingItems.findIndex(i => i.optionWrapper === item);
+  removeItem(item) {
+    const index = this.objectItems.findIndex(i => i.optionWrapper === item);
     if (index !== -1) {
-      this.fallingItems.splice(index, 1);
+      this.objectItems.splice(index, 1);
       View.optionArea.removeChild(item);
     }
   },
-  removeFallingItemByIndex(id) {
-    const item = this.fallingItems.find(item => item.id === id);
+  removeItemByIndex(id) {
+    const item = this.objectItems.find(item => item.id === id);
     if (item) {
-      const index = this.fallingItems.indexOf(item);
-      this.fallingItems.splice(index, 1);
+      const index = this.objectItems.indexOf(item);
+      this.objectItems.splice(index, 1);
       View.optionArea.removeChild(item.optionWrapper);
     }
   },
@@ -604,7 +552,6 @@ export default {
     else {
       this.randomQuestionId = 0;
     }
-
     //logController.log("answered count", this.answeredNum);
     return {
       QuestionType: _type,
@@ -651,7 +598,6 @@ export default {
       this.boxStatus[indices[i]] = false;
     }
   },
-
   setQuestions() {
     this.randomQuestion = this.randQuestion();
     logController.log(this.randomQuestion);
@@ -774,11 +720,23 @@ export default {
     View.stageImg.classList.add('fadeIn');
     View.stageImg.style.opacity = 1;
 
+    var table = document.createElement('div');
+    table.classList.add("table");
+    View.optionArea.appendChild(table);
+
+    for (let i = 0; i < this.maxBoxes; i++) {
+      const selectedBox = this.boxesArea[i];
+      const x = selectedBox.x;
+      const size = selectedBox.width;
+
+      this.renderPlateItem(size, x);
+    }
+
     for (let i = 0; i < this.randomPair.length; i++) {
       var optionImageId = i % View.preloadedFallingImages.length;
       this.createRandomItem(this.randomPair[i], View.preloadedFallingImages[optionImageId]);
     }
-
+    State.changeState('playing', 'waitAns');
   },
 
   adjustAnswerTextFontSize(answer) {
@@ -824,15 +782,7 @@ export default {
 
   showQuestions(status) {
     View.stageImg.style.display = status ? '' : 'none';
-    View.optionArea.style.display = status ? '' : 'none';
-    if (!status) {
-      this.finishedCreateOptions = false;
-      this.fallingItems.splice(0);
-      this.reFallingItems.splice(0);
-      View.optionArea.innerHTML = '';
-      this.createdOptionId = 0;
-      //logController.log("::::::::::::::::::::::::::::", this.typedItems);
-    }
+    View.optionArea.style.opacity = status ? '1' : '0';
   },
   finishedGame() {
     this.stopCountTime();
@@ -840,51 +790,30 @@ export default {
     State.changeState('finished');
     this.startedGame = false;
   },
-  fillWord(option, headPosition) {
+  fillWord(optionId=null) {
+    if (optionId === null || this.objectItems === null || this.objectItems.length === 0 || this.objectItems[optionId] === undefined) {
+      console.warn("Invalid optionId or objectItems is null/empty.");
+      return;
+    }
+
+    var option = this.objectItems[optionId].optionWrapper;
+    if (option === undefined || !option) {
+        console.warn("Option wrapper is undefined or null.");
+        return;
+    }
+
     if (this.answerWrapper) {
       if (this.fillwordTime < this.answerLength) {
         this.answerWrapper.textContent += option.getAttribute('word');
         this.adjustAnswerTextFontSize(this.answerWrapper.textContent);
-
+        State.changeState('playing', 'checkingQuestion');
         if (this.questionType.type === "MultipleChoice") {
           if (View.optionArea.contains(option)) {
-            this.resetFallingItem(option);
+            option.classList.remove('show');
           }
         }
         else {
-          let bounceX;
-          let angle;
-          let optionCenter = (option.offsetLeft + (this.optionSize / 2));
-          bounceX = (optionCenter - (headPosition.x + headPosition.radius)) / 4;
-          angle = (optionCenter - headPosition.x) / 4;
-          let headPositionY = headPosition.y - headPosition.radius - Math.abs(bounceX);
-          let bounceY = headPositionY - 300;
-          let bounceAngle;
-          let bounceBottomAngle;
-          //logController.log("bounceY", bounceY);
-          //logController.log("angle", angle);
-          if (angle > 0) {
-            bounceAngle = Math.abs(angle);
-            bounceBottomAngle = Math.abs(angle) + 25;
-          } else {
-            let newAngle = Math.abs(angle);
-            bounceAngle = '-' + newAngle;
-            bounceBottomAngle = '-' + (Math.abs(angle) + 25);
-          }
-
-          option.style.setProperty('--bounce-x', `${angle}px`);
-          option.style.setProperty('--head-position-x', `${0}px`);
-          option.style.setProperty('--head-position-y', `${headPositionY}px`);
-          option.style.setProperty('--head-bounce-y', `${bounceY}px`);
-          option.style.setProperty('--bounce-angle', `${bounceAngle}deg`);
-          option.style.setProperty('--bounce-bottom-angle', `${bounceBottomAngle}deg`);
-          option.style.setProperty('--bounce-speed', `${1}s`)
           option.classList.remove('show');
-          // const childSpan = option.querySelector('.option');
-          //childSpan.classList.remove('fixedText');
-          option.classList.add('showBonunce');
-
-          // logController.log("deduct:", option);
           this.typedItems.push(option);
         }
 
@@ -926,7 +855,7 @@ export default {
         this.typedItems.pop();
       }
 
-      //let hiddenedOption = this.fallingItems.filter(item => item.optionWrapper.getAttribute('word') === lastChar);
+      //let hiddenedOption = this.objectItems.filter(item => item.optionWrapper.getAttribute('word') === lastChar);
       setTimeout(() => {
         //logController.log("this.typedItems", this.typedItems);
         this.isTriggeredBackSpace = false;
@@ -943,7 +872,7 @@ export default {
     this.answerTextField.classList.remove('wrong');
     this.answerWrapper.textContent = '';
     this.fillwordTime = 0;
-    this.fallingItems.splice(0);
+    this.objectItems.splice(0);
     View.optionArea.innerHTML = '';
     this.typedItems.splice(0);
     this.selectedCount = 0;
@@ -954,7 +883,7 @@ export default {
     this.leftCount = 0;
     this.rightCount = 0;
     this.fillwordTime = 0;
-    this.fallingItems.splice(0);
+    this.objectItems.splice(0);
     View.optionArea.innerHTML = '';
     this.typedItems.splice(0);
     this.selectedCount = 0;
@@ -967,7 +896,7 @@ export default {
     View.stageImg.innerHTML = '';
     setTimeout(() => {
       this.nextQuestion = true;
-    }, 1000);
+    }, 500);
   },
   ////////////////////////////Added Submit Answer API/////////////////////////////////////////////////////
   checkAnswer(answer) {

@@ -23,6 +23,7 @@ export class RendererCanvas2d {
     this.headCircleYScale = 1.4;
     this.showSkeleton = false;
     this.maxBoxes = 4;
+    this.boxesProgress = [0, 0, 0, 0];
   }
 
   draw(rendererParams) {
@@ -32,16 +33,15 @@ export class RendererCanvas2d {
 
     if (this.isStateActive()) {
       let isCurPoseValid = false;
-      if (poses && poses.length > 0) {
-        const ratio = video.width / video.videoWidth;
-        this.drawResults(poses, ratio, isFPSMode);
-        isCurPoseValid = this.isPoseValid(poses);
-        if (isCurPoseValid && State.bodyInsideRedBox.value) {
-          this.handleStateTransitions();
-        }
+      this.headCircle = null;
+      const ratio = video.width / video.videoWidth;
+      this.drawResults(poses, ratio, isFPSMode);
+      isCurPoseValid = this.isPoseValid(poses);
+      if (isCurPoseValid && State.bodyInsideRedBox.value) {
+        this.handleStateTransitions();
       }
       this.drawHeadTracker(showMask);
-      this.drawBox(isCurPoseValid);
+      this.drawBox(isCurPoseValid, isFPSMode);
     }
   }
 
@@ -89,7 +89,7 @@ export class RendererCanvas2d {
     } else if (State.stateType === 'touched2' && State.selectedImg.lastFor > 3000) {
       // Handle answer checking if necessary
     } else if (!State.selectedImg.value) {
-      State.changeState('playing', 'waitAns');
+      //State.changeState('playing', 'waitAns');
     }
   }
 
@@ -142,58 +142,14 @@ export class RendererCanvas2d {
         this.drawHeadTracker(false);
         return false;
       }
-
-      //檢查是否有選到圖
-      let optionWrappers = document.querySelectorAll('.canvasWrapper > .optionArea > .optionWrapper.show');
-      let canvasWrapper = document.querySelector('.canvasWrapper');
-      if (State.state == 'playing' && ['waitAns'].includes(State.stateType)) {
-
-        this.touchBox = null;
-        if (this.headCircle) {
-
-          // const canvasWrapperRect = canvasWrapper.getBoundingClientRect();
-          //logController.log(this.headCircle);
-          for (let box of this.boxes) {
-            //const optionRect = option.getBoundingClientRect();
-            if (
-              (this.headCircle.x) > (box.x) &&
-              (this.headCircle.x) < (box.x + box.width) &&
-              (this.headCircle.y) > (box.y) &&
-              (this.headCircle.y) < (box.y + box.height)
-            ) {
-              //touchingWord.push(option);
-              this.touchBox = box;
-              //console.log("touch box", this.touchBox);
-            }
-          }
-        }
-        else {
-          headTracker.style.display = 'none';
-        }
-
-        /*for (let option of optionWrappers) {
-          if (touchingWord.includes(option) && !option.classList.contains('touch')) {
-            State.setPoseState('selectedImg', option);
-            //logController.log("touch ", option);
-            Game.fillWord(option, this.headCircle);
-          }
-        }
-
-        if (touchingWord.length === 0) State.setPoseState('selectedImg', '');*/
-      }
-      else if (State.state == 'playing' && ['wrong'].includes(State.stateType)) {
-        for (let option of optionWrappers) option.classList.remove('touch');
-        State.changeState('playing', 'waitAns');
-      }
-
       return true;
     } else {
       return false;
     }
   }
 
-  drawBox() {
-    if (Game.boxStatus === null) return;
+  drawBox(isCurPoseValid = true, isFPSMode = false) {
+    if (Game.boxStatus === null || !isCurPoseValid) return;
     const screenWidth = this.videoWidth;
     const screenHeight = this.videoHeight;
     const boxHeight = screenHeight * 0.95;
@@ -203,38 +159,57 @@ export class RendererCanvas2d {
 
     // Create the boxes based on the status
     this.boxes = [
-      { x: 0, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[0] },
-      { x: totalBoxWidth + outerSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[1] },
-      { x: totalBoxWidth * 2 + outerSpace + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[2] },
-      { x: totalBoxWidth * 3 + (outerSpace * 2) + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[3] }
+        { id: 0, x: 0, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[0], touched: false },
+        { id: 1, x: totalBoxWidth + outerSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[1], touched: false},
+        { id: 2, x: totalBoxWidth * 2 + outerSpace + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[2], touched: false},
+        { id: 3, x: totalBoxWidth * 3 + (outerSpace * 2) + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[3], touched: false}
     ];
 
-    Game.boxesArea = this.boxes;
-
-    // Draw the boxes based on their enabled status
     this.boxes.forEach(box => {
-      if (box.enable) {
-        this.ctx.beginPath();
-        this.ctx.setLineDash([5, 5]); // Set dashed line style
-        this.ctx.rect(box.x, box.y, box.width, box.height);
+        if (box.enable) {
+            if (this.headCircle &&
+                State.state == 'playing' && ['waitAns'].includes(State.stateType)) {
+                if ((this.headCircle.x) > (box.x) &&
+                    (this.headCircle.x) < (box.x + box.width) &&
+                    (this.headCircle.y) > (box.y) &&
+                    (this.headCircle.y) < (box.y + box.height)
+                ) {
+                    State.setPoseState('selectedImg', box);
+                    this.boxesProgress[box.id] += 1; // Increment progress
+                    console.log(`Box ${box.id} progress: ${this.boxesProgress[box.id]}`);
+                    if (this.boxesProgress[box.id] >= 30) { // 3 seconds at 60 FPS
+                        box.touched = true;
+                        Game.fillWord(box.id);
+                        console.log(`Box ${box.id} touched!`);
+                    }
+                }
+                else {
+                  this.boxesProgress[box.id] = 0;
+                }
 
-        const isTouchedBox = this.touchBox && this.touchBox.x === box.x && this.touchBox.y === box.y && this.touchBox.width === box.width && this.touchBox.height === box.height;
-        this.ctx.strokeStyle = isTouchedBox ? 'red' : '#000000'; // Outline color
-        this.ctx.stroke();
-      }
+                if (isFPSMode || this.showSkeleton) {
+                  this.ctx.beginPath();
+                  this.ctx.setLineDash([5, 5]); // Set dashed line style
+                  this.ctx.rect(box.x, box.y, box.width, box.height);
+                  this.ctx.strokeStyle = box.touched ? 'green' : '#000000'; // Outline color
+                  this.ctx.stroke();
+
+                  // Draw progress bar
+                  if (this.boxesProgress[box.id] > 0 && this.boxesProgress[box.id] < 30) {
+                      const progressWidth = (this.boxesProgress[box.id] / 30) * box.width;
+                      this.ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+                      this.ctx.fillRect(box.x, box.y + box.height + 5, progressWidth, 5);
+                  }
+              }
+            }
+            else {
+              this.boxesProgress[box.id] = 0;
+            }
+        }
     });
+
+    Game.boxesArea = this.boxes;
   }
-
-
-  /*drawBox(isCurPoseValid) {
-    this.ctx.beginPath();
-    this.ctx.lineWidth = isCurPoseValid ? 1 : Math.max(10, this.videoHeight * 0.01);
-    this.ctx.rect(this.redBoxX, this.redBoxY, this.redBoxWidth, this.redBoxHeight);
-    this.ctx.strokeStyle = isCurPoseValid ? '#FFFFFF' : '#ff0000';
-    this.ctx.stroke();
-    if (!this.lastPoseValidValue && isCurPoseValid && State.isSoundOn) Sound.play('poseValid');
-    this.lastPoseValidValue = isCurPoseValid;
-  }*/
 
   drawHorizontalLine(isCurPoseValid) {
     const centerY = this.lineHeight; // Calculate the vertical center of the screen
@@ -257,15 +232,16 @@ export class RendererCanvas2d {
   drawHeadTracker(status = true) {
     if (this.headCircle) {
       if (status) {
-        const widthScale = State.lang === "0" ? 85 : 100;
+        const widthScale = State.lang === "0" ? 50 : 50;
         const xInVw = (this.headCircle.x / window.innerWidth) * 100;
         const maxWidth = this.headCircle.radius * 2 / window.innerWidth * widthScale;
         const width = `${maxWidth}vw`;
         const left = `calc(${xInVw}vw - ${maxWidth / 2}vw)`;
-        const offsetY = Math.max(10, this.headCircle.radius / 2);
+        const offsetY = Math.max(10, maxWidth / 0.4);
         const top = `calc(${this.headCircle.y - offsetY}px)`;
-
-        view.showHeadTracker(true, width, left, top);
+        const rotationScaleFactor = 1.5;
+        const rotation = this.headCircle.rotation * rotationScaleFactor;
+        view.showHeadTracker(true, width, left, top, rotation);
       }
       else {
         view.showHeadTracker(false);
@@ -437,10 +413,13 @@ export class RendererCanvas2d {
       // Increase the radius to better cover the head
       const scaleFactor = 1.3; // Adjust this factor as needed
       const adjustedRadius = averageDistance * scaleFactor;
-
+      const edx = rightEar.x - leftEar.x;
+      const edy = rightEar.y - leftEar.y;
+      const rotation = Math.atan2(edy, edx) * (180 / Math.PI);
       this.headCircle = {
         x: centerX,
         y: circleY,
+        rotation: rotation,
         radius: adjustedRadius,
       };
 
