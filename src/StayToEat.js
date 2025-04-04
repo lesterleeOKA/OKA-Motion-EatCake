@@ -366,14 +366,14 @@ export default {
   generateUniqueId() {
     return Math.random().toString(16).slice(2);
   },
-  createPlate(){
+  createPlate() {
 
   },
   createRandomItem(char, optionImage) {
     if (char && char.length !== 0 && this.boxesArea.length !== 0) {
       //console.log(this.boxesArea);
       const enabledBoxes = this.boxesArea.filter((box, index) => this.boxStatus[index]);
-      if (enabledBoxes.length === 0) {
+      if (this.boxesArea.length === 0 || !this.boxesArea) {
         console.warn("No enabled boxes available.");
         return;
       }
@@ -387,7 +387,7 @@ export default {
       const generatePosition = () => {
         const x = selectedBox.x + selectedBox.width * 0.093;
         const size = selectedBox.width * 0.8;
-        const id = this.generateUniqueId();
+        const id = selectedBox.id;
         const optionWrapper = this.createOptionWrapper(word, id, size, optionImage, this.createdOptionId);
 
         const newObjectItem = {
@@ -790,18 +790,17 @@ export default {
     State.changeState('finished');
     this.startedGame = false;
   },
-  fillWord(optionId=null) {
-    if (optionId === null || this.objectItems === null || this.objectItems.length === 0 || this.objectItems[optionId] === undefined) {
-      console.warn("Invalid optionId or objectItems is null/empty.");
+  fillWord(optionId = null) {
+    if (optionId === null || this.objectItems === null || this.objectItems.length === 0) {
+      logController.error("objectItems", this.objectItems);
+      logController.warn("Invalid optionId or objectItems is null/empty.");
       return;
     }
-
-    var option = this.objectItems[optionId].optionWrapper;
+    const option = this.objectItems.find(item => item.id === optionId).optionWrapper;
     if (option === undefined || !option) {
-        console.warn("Option wrapper is undefined or null.");
-        return;
+      logController.warn("Option wrapper is undefined or null.");
+      return;
     }
-
     if (this.answerWrapper) {
       if (this.fillwordTime < this.answerLength) {
         this.answerWrapper.textContent += option.getAttribute('word');

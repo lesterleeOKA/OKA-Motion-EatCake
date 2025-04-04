@@ -159,53 +159,53 @@ export class RendererCanvas2d {
 
     // Create the boxes based on the status
     this.boxes = [
-        { id: 0, x: 0, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[0], touched: false },
-        { id: 1, x: totalBoxWidth + outerSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[1], touched: false},
-        { id: 2, x: totalBoxWidth * 2 + outerSpace + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[2], touched: false},
-        { id: 3, x: totalBoxWidth * 3 + (outerSpace * 2) + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[3], touched: false}
+      { id: 0, x: 0, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[0], touched: false },
+      { id: 1, x: totalBoxWidth + outerSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[1], touched: false },
+      { id: 2, x: totalBoxWidth * 2 + outerSpace + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[2], touched: false },
+      { id: 3, x: totalBoxWidth * 3 + (outerSpace * 2) + middleSpace, y: (screenHeight - boxHeight) / 2, width: totalBoxWidth, height: boxHeight, enable: Game.boxStatus[3], touched: false }
     ];
 
     this.boxes.forEach(box => {
-        if (box.enable) {
-            if (this.headCircle &&
-                State.state == 'playing' && ['waitAns'].includes(State.stateType)) {
-                if ((this.headCircle.x) > (box.x) &&
-                    (this.headCircle.x) < (box.x + box.width) &&
-                    (this.headCircle.y) > (box.y) &&
-                    (this.headCircle.y) < (box.y + box.height)
-                ) {
-                    State.setPoseState('selectedImg', box);
-                    this.boxesProgress[box.id] += 1; // Increment progress
-                    console.log(`Box ${box.id} progress: ${this.boxesProgress[box.id]}`);
-                    if (this.boxesProgress[box.id] >= 30) { // 3 seconds at 60 FPS
-                        box.touched = true;
-                        Game.fillWord(box.id);
-                        console.log(`Box ${box.id} touched!`);
-                    }
-                }
-                else {
-                  this.boxesProgress[box.id] = 0;
-                }
-
-                if (isFPSMode || this.showSkeleton) {
-                  this.ctx.beginPath();
-                  this.ctx.setLineDash([5, 5]); // Set dashed line style
-                  this.ctx.rect(box.x, box.y, box.width, box.height);
-                  this.ctx.strokeStyle = box.touched ? 'green' : '#000000'; // Outline color
-                  this.ctx.stroke();
-
-                  // Draw progress bar
-                  if (this.boxesProgress[box.id] > 0 && this.boxesProgress[box.id] < 30) {
-                      const progressWidth = (this.boxesProgress[box.id] / 30) * box.width;
-                      this.ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
-                      this.ctx.fillRect(box.x, box.y + box.height + 5, progressWidth, 5);
-                  }
-              }
+      if (box.enable) {
+        if (this.headCircle &&
+          State.state == 'playing' && ['waitAns'].includes(State.stateType)) {
+          if ((this.headCircle.x) > (box.x) &&
+            (this.headCircle.x) < (box.x + box.width) &&
+            (this.headCircle.y) > (box.y) &&
+            (this.headCircle.y) < (box.y + box.height)
+          ) {
+            State.setPoseState('selectedImg', box);
+            this.boxesProgress[box.id] += 1; // Increment progress
+            //console.log(`Box ${box.id} progress: ${this.boxesProgress[box.id]}`);
+            if (this.boxesProgress[box.id] >= 30) { // 3 seconds at 60 FPS
+              box.touched = true;
+              Game.fillWord(box.id);
+              //console.log(`Box ${box.id} touched!`);
             }
-            else {
-              this.boxesProgress[box.id] = 0;
+          }
+          else {
+            this.boxesProgress[box.id] = 0;
+          }
+
+          if (isFPSMode || this.showSkeleton) {
+            this.ctx.beginPath();
+            this.ctx.setLineDash([5, 5]); // Set dashed line style
+            this.ctx.rect(box.x, box.y, box.width, box.height);
+            this.ctx.strokeStyle = box.touched ? 'green' : '#000000'; // Outline color
+            this.ctx.stroke();
+
+            // Draw progress bar
+            if (this.boxesProgress[box.id] > 0 && this.boxesProgress[box.id] < 30) {
+              const progressWidth = (this.boxesProgress[box.id] / 30) * box.width;
+              this.ctx.fillStyle = 'rgba(0, 255, 0, 0.5)';
+              this.ctx.fillRect(box.x, box.y + box.height + 5, progressWidth, 5);
             }
+          }
         }
+        else {
+          this.boxesProgress[box.id] = 0;
+        }
+      }
     });
 
     Game.boxesArea = this.boxes;
