@@ -231,7 +231,7 @@ function gameSetup() {
     View.preloadUsedImages(null);
     setAPIImage(document.getElementById('previewImg'), lang === "0" ? previewImageEng : previewImageCh);
     let instruction = languagesContent(
-      "Use your head to collide the words!",
+      "Use your body to select the words!",
       "請閱讀金句，選出（   ）內的字詞。",
       "请阅读金句，选出（   ）内的字词。"
     );

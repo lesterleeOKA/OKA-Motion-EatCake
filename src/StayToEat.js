@@ -497,6 +497,21 @@ export default {
     item.optionWrapper.classList.add("show");
     item.optionWrapper.style.left = item.x + 'px';
   },
+  renderOptionOutline(size, positionX) {
+    var outline = document.createElement('div');
+    outline.classList.add("optionOutline");
+    View.optionArea.appendChild(outline);
+    outline.style.width = size + 'px';
+    outline.style.height = size * 2.5 + 'px';
+    outline.style.left = positionX + 'px';
+
+    var progressBar = document.createElement('div');
+    progressBar.classList.add("optionProgressBar");
+    View.optionArea.appendChild(progressBar);
+    progressBar.style.width = size * 0.5 + 'px';
+    progressBar.style.height = size * 0.3 + 'px';
+    progressBar.style.left = positionX + 'px';
+  },
   renderPlateItem(size, positionX) {
     var plate = document.createElement('div');
     plate.classList.add("optionPlate");
@@ -729,6 +744,7 @@ export default {
       const x = selectedBox.x;
       const size = selectedBox.width;
 
+      this.renderOptionOutline(size, x);
       this.renderPlateItem(size, x);
     }
 

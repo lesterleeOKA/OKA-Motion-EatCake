@@ -22,21 +22,35 @@
   justify-content: center;
   align-items: center;
 }
-.canvasWrapper > .optionArea > .table {
+.canvasWrapper > .optionArea > .optionOutline {
   position: absolute;
   display: inline-block;
   left: 0px;
-  width: 100%;
-  height: 100%;
+  bottom: 10%;
+  background-color: rgba(255, 255, 255, 0.5);
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 1));
+  transition: opacity 0.1s ease;
+  opacity: 1;
+  background: url(../images/StayToEat/area.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  z-index: 2;
+}
+.canvasWrapper > .optionArea > .table {
+  position: absolute;
+  display: inline-block;
+  width: 100.45%;
+  height: 58%;
   bottom: -35%;
   filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 1));
   transition: opacity 0.1s ease;
   opacity: 1;
   background: url(../images/StayToEat/table.png);
   background-position: center;
-  background-size: contain;
+  background-size: cover;
   background-repeat: no-repeat;
-  z-index: 1;
+  z-index: 3;
 }
 .canvasWrapper > .optionArea > .optionPlate {
   position: absolute;
@@ -51,7 +65,20 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  z-index: 2;
+  z-index: 4;
+}
+.canvasWrapper > .optionArea > .optionProgressBar {
+  position: absolute;
+  display: inline-block;
+  left: 0;
+  left: 0;
+  filter: drop-shadow(0px 0px 10px rgba(0, 0, 0, 1));
+  background: url(../images/normal/progress_bar_null.png);
+  background-position: center;
+  background-size: contain;
+  background-repeat: no-repeat;
+  margin: 4.5%;
+  z-index: 5;
 }
 .canvasWrapper > .optionArea > .optionWrapper {
   position: relative;
@@ -65,7 +92,7 @@
   background-position: center;
   background-size: contain;
   background-repeat: no-repeat;
-  z-index: 3;
+  z-index: 6;
 }
 
 .buttonWrapper {

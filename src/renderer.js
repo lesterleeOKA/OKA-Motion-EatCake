@@ -113,21 +113,17 @@ export class RendererCanvas2d {
   }
 
   isPoseValid(poses) {
-    if (!poses[0]) return false;
-    let pose = poses[0];
-    //let passScore = this.scoreThreshold;
     let isBodyOutBox;
+    let pose = poses[0];
+    //logController.log("poses", pose);
+    if (!pose || pose === undefined || !this.headCircle) {
+      isBodyOutBox = true;
+    }
+    else {
+      isBodyOutBox = false;
+    }
 
-    if (pose.keypoints != null) {
-      if (this.headCircle) {
-        let headToppestY = this.headCircle.y - this.headCircle.radius;
-        isBodyOutBox = headToppestY < this.lineHeight ? true : false
-      }
-      else {
-        isBodyOutBox = false;
-      }
-
-      State.setPoseState('bodyInsideRedBox', !isBodyOutBox);
+    State.setPoseState('bodyInsideRedBox', !isBodyOutBox);
       if (isBodyOutBox) {
         if (State.state == 'playing') {
           if (State.lang === "1" && State.lang) {
@@ -138,14 +134,18 @@ export class RendererCanvas2d {
             State.changeState('outBox', 'outBox');
           }
         }
+        if (this.ctx) {
+          this.ctx.beginPath();
+          this.ctx.rect(0, 0, this.videoWidth, this.videoHeight);
+          this.ctx.strokeStyle = '#ff0000'; // Red color
+          this.ctx.lineWidth = Math.max(10, this.videoHeight * 0.01); // Set the line width if needed
+          this.ctx.stroke();
+        }
         //logController.log('outBox', 'outBox');
         this.drawHeadTracker(false);
         return false;
       }
       return true;
-    } else {
-      return false;
-    }
   }
 
   drawBox(isCurPoseValid = true, isFPSMode = false) {
@@ -211,7 +211,7 @@ export class RendererCanvas2d {
     Game.boxesArea = this.boxes;
   }
 
-  drawHorizontalLine(isCurPoseValid) {
+  /*drawHorizontalLine(isCurPoseValid) {
     const centerY = this.lineHeight; // Calculate the vertical center of the screen
     const startX = 0; // Start of the line (left edge)
     const endX = this.videoWidth; // End of the line (right edge)
@@ -227,7 +227,7 @@ export class RendererCanvas2d {
       Sound.play('poseValid');
     }
     this.lastPoseValidValue = isCurPoseValid;
-  }
+  }*/
 
   drawHeadTracker(status = true) {
     if (this.headCircle) {
