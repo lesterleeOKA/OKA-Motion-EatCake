@@ -1,924 +1,284 @@
 {
-   "questions":[
-      {
-        "qid":"p1u1-a1",
-        "questionType":"audio",
-        "question":"Good morning, Good afternoon, Good night",
-        "answers": [
-         "Good morning",
-         "Good afternoon",
-         "Good night"
-        ],
-        "correctAnswer":"Good afternoon"
-      },
-      {
-        "qid": "p1u1-a2",
-        "questionType": "audio",
-        "question": "Good morning, Good afternoon, Goodbye",
-        "answers": [
-          "Good morning",
-          "Good afternoon",
-          "Goodbye"
-        ],
-        "correctAnswer": "Good morning"
-      },
-      {
-        "qid": "p1u1-a3",
-        "questionType": "audio",
-        "question": "Principal, Friend, Teacher",
-        "answers": [
-          "Principal",
-          "Friend",
-          "Teacher"
-        ],
-        "correctAnswer": "Teacher"
-      },
-      {
-        "qid": "p1u1-a4",
-        "questionType": "audio",
-        "question": "Greek, Greet, Greed",
-        "answers": [
-          "Greek",
-          "Greet",
-          "Greed"
-        ],
-        "correctAnswer": "Greet"
-      },
-      {
-        "qid": "p1u1-a5",
-        "questionType": "audio",
-        "question": "Moniter, Monitor, Moniker",
-        "answers": [
-          "Moniter",
-          "Monitor",
-          "Moniker"
-        ],
-        "correctAnswer": "Monitor"
-      },
-      {
-        "qid": "p1u1-a6",
-        "questionType": "audio",
-        "question": "Schoolmate, Classroom, Classmate",
-        "answers": [
-          "Schoolmate",
-          "Classroom",
-          "Classmate"
-        ],
-        "correctAnswer": "Classmate"
-      },
-      {
-        "qid": "p1u1-a7",
-        "questionType": "audio",
-        "question": "Gardener, Gadener, Gardenor",
-        "answers": [
-          "Gardener",
-          "Gadener",
-          "Gardenor"
-        ],
-        "correctAnswer": "Gardener"
-      },
-      {
-        "qid": "p1u1-a8",
-        "questionType": "audio",
-        "question": "Hello, Hallo, Hullo",
-        "answers": [
-          "Hello",
-          "Hallo",
-          "Hullo"
-        ],
-        "correctAnswer": "Hello"
-      },
-      {
-        "qid": "p1u1-a9",
-        "questionType": "audio",
-        "question": "Freind, Fried, Friend",
-        "answers": [
-          "Freind",
-          "Fried",
-          "Friend"
-        ],
-        "correctAnswer": "Friend"
-      },
-      {
-        "qid": "p1u1-a10",
-        "questionType": "audio",
-        "question": "Good morning, Good afternoon, Goodbye",
-        "answers": [
-          "Good morning",
-          "Good afternoon",
-          "Goodbye"
-        ],
-        "correctAnswer": "Goodbye"
-      },
-      {
-        "qid": "p1u1-a11",
-        "questionType": "audio",
-        "question": "Janitor, Lender, Leader",
-        "answers": [
-          "Janitor",
-          "Lender",
-          "Leader"
-        ],
-        "correctAnswer": "Leader"
-      },
-      {
-        "qid": "p1u1-a12",
-        "questionType": "audio",
-        "question": "Princes, Principle, Princess",
-        "answers": [
-          "Princes",
-          "Principle",
-          "Princess"
-        ],
-        "correctAnswer": "Principle"
-      },
-      {
-        "qid": "p1u1-a13",
-        "questionType": "audio",
-        "question": "Monitor, Driver, Janitor",
-        "answers": [
-          "Monitor",
-          "Driver",
-          "Janitor"
-        ],
-        "correctAnswer": "Driver"
-      },
-      {
-        "qid": "p1u1-a14",
-        "questionType": "audio",
-        "question": "Cockroach, Coach, Couch",
-        "answers": [
-          "Cockroach",
-          "Coach",
-          "Couch"
-        ],
-        "correctAnswer": "Coach"
-      },
-      {
-        "qid": "p1u1-a15",
-        "questionType": "audio",
-        "question": "Library, Libraries, Librarian",
-        "answers": [
-          "Library",
-          "Libraries",
-          "Librarian"
-        ],
-        "correctAnswer": "Librarian"
-      },
-      {
-        "qid": "p1u1-a16",
-        "questionType": "audio",
-        "question": "English, Chinese, Maths",
-        "answers": [
-          "English",
-          "Chinese",
-          "Maths"
-        ],
-        "correctAnswer": "English"
-      },
-      {
-        "qid": "p1u1-a17",
-        "questionType": "audio",
-        "question": "English, Chinese, Maths",
-        "answers": [
-          "English",
-          "Chinese",
-          "Maths"
-        ],
-        "correctAnswer": "Chinese"
-      },
-      {
-        "qid": "p1u1-a18",
-        "questionType": "audio",
-        "question": "Leader, Driver, Janitor",
-        "answers": [
-          "Leader",
-          "Driver",
-          "Janitor"
-        ],
-        "correctAnswer": "Janitor"
-      },
-      {
-        "qid": "p1u1-a19",
-        "questionType": "audio",
-        "question": "Students, Student, Study",
-        "answers": [
-          "Students",
-          "Student",
-          "Study"
-        ],
-        "correctAnswer": "Student"
-      },
-      {
-        "qid": "p1u1-a20",
-        "questionType": "audio",
-        "question": "Prefect, Perfect, Principal",
-        "answers": [
-          "Prefect",
-          "Perfect",
-          "Principal"
-        ],
-        "correctAnswer": "Prefect"
-      },
-      {
-        "qid": "p1u3-e1",
-        "questionType": "text",
-        "question": "I have many colors. I make your picture more beautiful.",
-        "answers": [
-          "Crayons",
-          "Erasers",
-          "Pencils"
-        ],
-        "correctAnswer": "Crayons"
-      },
-      {
-        "qid": "p1u3-e2",
-        "questionType": "text",
-        "question": "I am very important. I help all students carry all the things to school.",
-        "answers": [
-          "Folder",
-          "Lunchbox",
-          "School Bag"
-        ],
-        "correctAnswer": "School Bag"
-      },
-      {
-        "qid": "p1u3-e3",
-        "questionType": "text",
-        "question": "I make sure your book is clean and neat. I help correct your mistakes.",
-        "answers": [
-          "Eraser",
-          "Ruler",
-          "Pen"
-        ],
-        "correctAnswer": "Eraser"
-      },
-      {
-        "qid": "p1u3-e4",
-        "questionType": "text",
-        "question": "You need me when you are hungry at recess.",
-        "answers": [
-          "Bottle",
-          "Snacks",
-          "Lunchbox"
-        ],
-        "correctAnswer": "Snacks"
-      },
-      {
-        "qid": "p1u3-e5",
-        "questionType": "text",
-        "question": "I have two legs and I am sharp. I can cut paper but also your finger.",
-        "answers": [
-          "Sharpener",
-          "Scissors",
-          "Glue"
-        ],
-        "correctAnswer": "Scissors"
-      },
-      {
-        "qid": "p1u3-e6",
-        "questionType": "text",
-        "question": "I can speak English, Chinese and even numbers too. You can learn a lot from me.",
-        "answers": [
-          "Highlighters",
-          "Folders",
-          "Books"
-        ],
-        "correctAnswer": "Books"
-      },
-      {
-        "qid": "p1u3-e7",
-        "questionType": "text",
-        "question": "You need me in math class. I help you find out how long the line is.",
-        "answers": [
-          "Eraser",
-          "Pen",
-          "Ruler"
-        ],
-        "correctAnswer": "Ruler"
-      },
-      {
-        "qid": "p1u3-e8",
-        "questionType": "text",
-        "question": "I help you remember what your teacher said.",
-        "answers": [
-          "Exercise",
-          "Notebook",
-          "Stapler"
-        ],
-        "correctAnswer": "Notebook"
-      },
-      {
-        "qid": "p1u3-e9",
-        "questionType": "text",
-        "question": "If you forget to bring me, you will be very thirsty all day.",
-        "answers": [
-          "Bottle",
-          "Lunchbox",
-          "Snacks"
-        ],
-        "correctAnswer": "Bottle"
-      },
-      {
-        "qid": "p1u3-e10",
-        "questionType": "text",
-        "question": "I usually wear blue, red or black. Your teacher likes red the most.",
-        "answers": [
-          "Pens",
-          "Pencils",
-          "Crayons"
-        ],
-        "correctAnswer": "Pens"
-      },
-      {
-        "qid": "p1u5-e1",
-        "questionType": "text",
-        "question": "I have black and white fur, and I love to eat bamboo.",
-        "answers": [
-          "Zebra",
-          "Tiger",
-          "Panda"
-        ],
-        "correctAnswer": "Panda"
-      },
-      {
-        "qid": "p1u5-e2",
-        "questionType": "text",
-        "question": "I have a long nose that can pick up things.",
-        "answers": [
-          "Elephant",
-          "Giraffe",
-          "Rabbit"
-        ],
-        "correctAnswer": "Elephant"
-      },
-      {
-        "qid": "p1u5-e3",
-        "questionType": "text",
-        "question": "My ears are so long, they almost touch the ground.",
-        "answers": [
-          "Rabbit",
-          "Monkey",
-          "Giraffe"
-        ],
-        "correctAnswer": "Rabbit"
-      },
-      {
-        "qid": "p1u5-e4",
-        "questionType": "text",
-        "question": "I have a long neck. I can touch the leaves.",
-        "answers": [
-          "Elephant",
-          "Giraffe",
-          "Monkey"
-        ],
-        "correctAnswer": "Giraffe"
-      },
-      {
-        "qid": "p1u5-e5",
-        "questionType": "text",
-        "question": "I'm the king of the jungle. I have loud roar.",
-        "answers": [
-          "Hippo",
-          "Snake",
-          "Lion"
-        ],
-        "correctAnswer": "Lion"
-      },
-      {
-        "qid": "p1u5-e6",
-        "questionType": "text",
-        "question": "I have a round tummy and a short tail. My thick brown fur keeps me warm.",
-        "answers": [
-          "Panda",
-          "Bear",
-          "Hippo"
-        ],
-        "correctAnswer": "Bear"
-      },
-      {
-        "qid": "p1u5-e7",
-        "questionType": "text",
-        "question": "I am long. I have no legs and I slide.",
-        "answers": [
-          "Giraffe",
-          "Tiger",
-          "Snake"
-        ],
-        "correctAnswer": "Snake"
-      },
-      {
-        "qid": "p1u5-e8",
-        "questionType": "text",
-        "question": "I have black and white strips. I run on the grass.",
-        "answers": [
-          "Zebra",
-          "Tiger",
-          "Panda"
-        ],
-        "correctAnswer": "Zebra"
-      },
-      {
-        "qid": "p1u5-e9",
-        "questionType": "text",
-        "question": "I have a long tail and I swing from tree to tree.",
-        "answers": [
-          "Rabbit",
-          "Monkey",
-          "Giraffe"
-        ],
-        "correctAnswer": "Monkey"
-      },
-      {
-        "qid": "p1u5-e10",
-        "questionType": "text",
-        "question": "I am gray in color. I live near the river.",
-        "answers": [
-          "Tiger",
-          "Crocodile",
-          "Hippo"
-        ],
-        "correctAnswer": "Hippo"
-      },
-      {
-        "qid": "p2u1-e1",
-        "questionType": "text",
-        "question": "I want to mail a letter.",
-        "answers": [
-          "Post office",
-          "School",
-          "Police station"
-        ],
-        "correctAnswer": "Post office"
-      },
-      {
-        "qid": "p2u1-e2",
-        "questionType": "text",
-        "question": "My hair is too long. I want to have a haircut.",
-        "answers": [
-        "Restaurant",
-        "Salon",
-        "Cafe"
-        ],
-        "correctAnswer": "Salon"
-      },
-      {
-        "qid": "p2u1-e3",
-        "questionType": "text",
-        "question": "My mom says I can play with Sally after my piano class.",
-        "answers": [
-        "Park",
-        "Clinic",
-        "Temple"
-        ],
-        "correctAnswer": "Park"
-      },
-      {
-        "qid": "p2u1-e4",
-        "questionType": "text",
-        "question": "Oh no! I think I lost my wallet.",
-        "answers": [
-        "Fire station",
-        "Police station",
-        "Post office"
-        ],
-        "correctAnswer": "Police station"
-      },
-      {
-        "qid": "p2u1-e5",
-        "questionType": "text",
-        "question": "I fell from a window and broke my arm!",
-        "answers": [
-        "Fire station",
-        "Police station",
-        "Hospital"
-        ],
-        "correctAnswer": "Hospital"
-      },
-      {
-        "qid": "p2u1-e6",
-        "questionType": "text",
-        "question": "I feel tired and hungry. Can we have a break?",
-        "answers": [
-        "Bank",
-        "Museum",
-        "Cafe"
-        ],
-        "correctAnswer": "Cafe"
-      },
-      {
-        "qid": "p2u1-e7",
-        "questionType": "text",
-        "question": "My family believes in god. We go to pray every Sunday.",
-        "answers": [
-        "Church",
-        "Hospital",
-        "Home"
-        ],
-        "correctAnswer": "Church"
-      },
-      {
-        "qid": "p2u1-e8",
-        "questionType": "text",
-        "question": "Uncle Billy is going to get some money.",
-        "answers": [
-        "Supermarket",
-        "Mall",
-        "Bank"
-        ],
-        "correctAnswer": "Bank"
-      },
-      {
-        "qid": "p2u1-e9",
-        "questionType": "text",
-        "question": "I am excited to see Miss Wong and my classmates again!",
-        "answers": [
-        "Home",
-        "Park",
-        "School"
-        ],
-        "correctAnswer": "School"
-      },
-      {
-        "qid": "p2u1-e10",
-        "questionType": "text",
-        "question": "It's 6 pm. I need to go or my mom will be angry!",
-        "answers": [
-        "Home",
-        "Cafe",
-        "School"
-        ],
-        "correctAnswer": "Home"
-      },
-      {
-        "qid": "p2u6-e1",
-        "questionType": "text",
-        "question": "I keep animals healthy and happy.",
-        "answers": [
-        "vet",
-        "nurse",
-        "chef"
-        ],
-        "correctAnswer": "vet"
-        },
-        {
-        "qid": "p2u6-e2",
-        "questionType": "text",
-        "question": "I teach children new knowledge.",
-        "answers": [
-        "artist",
-        "teacher",
-        "singer"
-        ],
-        "correctAnswer": "teacher"
-        },
-        {
-        "qid": "p2u6-e3",
-        "questionType": "text",
-        "question": "I help take care of the sick people.",
-        "answers": [
-        "waiter",
-        "thieves",
-        "nurse"
-        ],
-        "correctAnswer": "nurse"
-        },
-        {
-        "qid": "p2u6-e4",
-        "questionType": "text",
-        "question": "I can write songs and perform in front of people.",
-        "answers": [
-        "singer",
-        "policeman",
-        "housewife"
-        ],
-        "correctAnswer": "singer"
-        },
-        {
-        "qid": "p2u6-e5",
-        "questionType": "text",
-        "question": "I take good care of my children and spend time with them.",
-        "answers": [
-        "doctor",
-        "housewife",
-        "nurse"
-        ],
-        "correctAnswer": "housewife"
-        },
-        {
-        "qid": "p2u6-e6",
-        "questionType": "text",
-        "question": "I catch bad people and protect the city.",
-        "answers": [
-        "postman",
-        "pilot",
-        "policeman"
-        ],
-        "correctAnswer": "policeman"
-        },
-        {
-        "qid": "p2u6-e7",
-        "questionType": "text",
-        "question": "I travel around the world very often.",
-        "answers": [
-        "postman",
-        "pilot",
-        "policeman"
-        ],
-        "correctAnswer": "pilot"
-        },
-        {
-        "qid": "p2u6-e8",
-        "questionType": "text",
-        "question": "I look after the shop and sell my goods to you.",
-        "answers": [
-        "waitress",
-        "artist",
-        "shopkeeper"
-        ],
-        "correctAnswer": "shopkeeper"
-        },
-        {
-        "qid": "p2u6-e9",
-        "questionType": "text",
-        "question": "I draw beautiful paintings and make good sculptures.",
-        "answers": [
-        "waitress",
-        "artist",
-        "shopkeeper"
-        ],
-        "correctAnswer": "artist"
-        },
-        {
-        "qid": "p2u6-e10",
-        "questionType": "text",
-        "question": "I help bring letters to you.",
-        "answers": [
-        "postman",
-        "pilot",
-        "policeman"
-        ],
-        "correctAnswer": "postman"
-        },
-        {
-          "qid": "p3bu1-b1",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "africa",
-              "afraid",
-              "fry",
-              "avoid"
-          ],
-          "correctAnswer": "afraid",
-          "correctAnswerIndex": 1
-      },
-      {
-          "qid": "p3bu1-b2",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "angle",
-              "angel",
-              "anchor",
-              "angry"
-          ],
-          "correctAnswer": "angry",
-          "correctAnswerIndex": 3
-      },
-      {
-          "qid": "p3bu1-b3",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "board",
-              "boar",
-              "boat",
-              "bored"
-          ],
-          "correctAnswer": "bored",
-          "correctAnswerIndex": 3
-      },
-      {
-          "qid": "p3bu1-b4",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "excited",
-              "exited",
-              "exclaim",
-              "extra"
-          ],
-          "correctAnswer": "excited",
-          "correctAnswerIndex": 0
-      },
-      {
-          "qid": "p3bu1-b5",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "hungary",
-              "hungry",
-              "hung",
-              "honey"
-          ],
-          "correctAnswer": "hungry",
-          "correctAnswerIndex": 1
-      },
-      {
-          "qid": "p3bu1-b6",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "nan",
-              "nurse",
-              "nervous",
-              "nerve"
-          ],
-          "correctAnswer": "nervous",
-          "correctAnswerIndex": 2
-      },
-      {
-          "qid": "p3bu1-b7",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "said",
-              "sad",
-              "salt",
-              "set"
-          ],
-          "correctAnswer": "sad",
-          "correctAnswerIndex": 1
-      },
-      {
-          "qid": "p3bu1-b8",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "first",
-              "forty",
-              "thirty",
-              "thirsty"
-          ],
-          "correctAnswer": "thirty",
-          "correctAnswerIndex": 2
-      },
-      {
-          "qid": "p3bu1-b9",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "timed",
-              "tried",
-              "tired",
-              "tyre"
-          ],
-          "correctAnswer": "tired",
-          "correctAnswerIndex": 2
-      },
-      {
-          "qid": "p3bu1-b10",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "confident",
-              "confession",
-              "connection",
-              "consequence"
-          ],
-          "correctAnswer": "confident",
-          "correctAnswerIndex": 0
-      },
-      {
-          "qid": "p3bu1-b11",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "ember",
-              "embarassed",
-              "embarrassed",
-              "embarrased"
-          ],
-          "correctAnswer": "embarrassed",
-          "correctAnswerIndex": 2
-      },
-      {
-          "qid": "p3bu1-b12",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "fixture",
-              "rusty",
-              "thruster",
-              "frustrated"
-          ],
-          "correctAnswer": "frustrated",
-          "correctAnswerIndex": 3
-      },
-      {
-          "qid": "p3bu1-b13",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "jelly",
-              "jealous",
-              "jellyfish",
-              "jester"
-          ],
-          "correctAnswer": "jealous",
-          "correctAnswerIndex": 1
-      },
-      {
-          "qid": "p3bu1-b14",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "onset",
-              "upset",
-              "headset",
-              "reset"
-          ],
-          "correctAnswer": "upset",
-          "correctAnswerIndex": 1
-      },
-      {
-          "qid": "p3bu1-b15",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "crowd",
-              "prowl",
-              "proud",
-              "pour"
-          ],
-          "correctAnswer": "proud",
-          "correctAnswerIndex": 2
-      },
-      {
-          "qid": "p3bu1-b16",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "shot",
-              "shopped",
-              "shook",
-              "shocked"
-          ],
-          "correctAnswer": "shocked",
-          "correctAnswerIndex": 3
-      },
-      {
-          "qid": "p3bu1-b17",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "stressed",
-              "dressed",
-              "stretched",
-              "streets"
-          ],
-          "correctAnswer": "stressed",
-          "correctAnswerIndex": 0
-      },
-      {
-          "qid": "p3bu1-b18",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "wary",
-              "warm",
-              "wormy",
-              "worried"
-          ],
-          "correctAnswer": "worried",
-          "correctAnswerIndex": 3
-      },
-      {
-          "qid": "p3bu1-b19",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "torched",
-              "tummy",
-              "twitch",
-              "touched"
-          ],
-          "correctAnswer": "touched",
-          "correctAnswerIndex": 3
-      },
-      {
-          "qid": "p3bu1-b20",
-          "questionType": "audio",
-          "question": "",
-          "answers": [
-              "axe",
-              "anchor",
-              "anxious",
-              "answer"
-          ],
-          "correctAnswer": "anxious",
-          "correctAnswerIndex": 2
-      }
-   ]
+  "questions":[
+  {
+      "qid": "p1u1-e1",
+      "questionType": "fillInBlank",
+      "question": "Miss Chan is my favourite _________. She teaches me English.",
+      "answers": ["principal", "student", "teacher"],
+      "correctAnswer": "teacher"
+  },
+  {
+      "qid": "p1u1-e2",
+      "questionType": "fillInBlank",
+      "question": "It’s time to go, let’s say __________ to Aunt Lily.",
+      "answers": ["good morning", "good night", "goodbye"],
+      "correctAnswer": "goodbye"
+  },
+  {
+      "qid": "p1u1-e3",
+      "questionType": "fillInBlank",
+      "question": "Mr Lee made Tom a ________and he is happy about it.",
+      "answers": ["monitor", "monita", "monika"],
+      "correctAnswer": "monitor"
+  },
+  {
+      "qid": "p1u1-e4",
+      "questionType": "fillInBlank",
+      "question": "Leo and I are____________. We are in the same class.",
+      "answers": ["students", "classmates", "teachers"],
+      "correctAnswer": "classmates"
+  },
+  {
+      "qid": "p1u1-e5",
+      "questionType": "fillInBlank",
+      "question": "Amy is my best _______ and we always share secrets to each other.",
+      "answers": ["friend", "teacher", "student"],
+      "correctAnswer": "friend"
+  },
+  {
+      "qid": "p1u1-e6",
+      "questionType": "fillInBlank",
+      "question": "You can ask a ________to help you find books.",
+      "answers": ["library", "prefect", "librarian"],
+      "correctAnswer": "librarian"
+  },
+  {
+      "qid": "p1u1-e7",
+      "questionType": "fillInBlank",
+      "question": "We should ____ others when we see them.",
+      "answers": ["greek", "greed", "greet"],
+      "correctAnswer": "greet"
+  },
+  {
+      "qid": "p1u1-e8",
+      "questionType": "fillInBlank",
+      "question": "Who is the group ______?",
+      "answers": ["cleaner", "leader", "lender"],
+      "correctAnswer": "leader"
+  },
+  {
+      "qid": "p1u1-e9",
+      "questionType": "fillInBlank",
+      "question": "He says good __________ to us first thing every day.",
+      "answers": ["morning", "evening", "afternoon"],
+      "correctAnswer": "morning"
+  },
+  {
+      "qid": "p1u1-e10",
+      "questionType": "fillInBlank",
+      "question": "Sorry, do you know where the ________’s office is?",
+      "answers": ["principal", "principle", "princess"],
+      "correctAnswer": "principal"
+  },
+  {
+    "qid": "p1u2-a1",
+    "questionType": "audio",
+    "question": "femily, families, family",
+    "answers": ["femily", "families", "family"],
+    "correctAnswer": "family"
+  },
+  {
+      "qid": "p1u2-a2",
+      "questionType": "audio",
+      "question": "mother, father, sister",
+      "answers": ["mother", "father", "sister"],
+      "correctAnswer": "sister"
+  },
+  {
+      "qid": "p1u2-a3",
+      "questionType": "audio",
+      "question": "mother, father, sister",
+      "answers": ["mother", "father", "sister"],
+      "correctAnswer": "father"
+  },
+  {
+      "qid": "p1u2-a4",
+      "questionType": "audio",
+      "question": "mother, sister, brother",
+      "answers": ["mother", "sister", "brother"],
+      "correctAnswer": "mother"
+  },
+  {
+      "qid": "p1u2-a5",
+      "questionType": "audio",
+      "question": "mother, sister, brother",
+      "answers": ["mother", "sister", "brother"],
+      "correctAnswer": "brother"
+  },
+  {
+      "qid": "p1u2-a6",
+      "questionType": "audio",
+      "question": "grandma, grandmother, grandfather",
+      "answers": ["grandma", "grandmother", "grandfather"],
+      "correctAnswer": "grandmother"
+  },
+  {
+      "qid": "p1u2-a7",
+      "questionType": "audio",
+      "question": "grandmother, grandpa, grandfather",
+      "answers": ["grandmother", "grandpa", "grandfather"],
+      "correctAnswer": "grandfather"
+  },
+  {
+      "qid": "p1u2-a8",
+      "questionType": "audio",
+      "question": "parrots, parants, parents",
+      "answers": ["parrots", "parants", "parents"],
+      "correctAnswer": "parents"
+  },
+  {
+      "qid": "p1u2-a9",
+      "questionType": "audio",
+      "question": "children, chilldren, childrens",
+      "answers": ["children", "chilldren", "childrens"],
+      "correctAnswer": "children"
+  },
+  {
+      "qid": "p1u2-a10",
+      "questionType": "audio",
+      "question": "babies, baby, babe",
+      "answers": ["babies", "baby", "babe"],
+      "correctAnswer": "baby"
+  },
+  {
+      "qid": "p1u2-a11",
+      "questionType": "audio",
+      "question": "ant, aunt, arent",
+      "answers": ["ant", "aunt", "arent"],
+      "correctAnswer": "aunt"
+  },
+  {
+      "qid": "p1u2-a12",
+      "questionType": "audio",
+      "question": "uncle, oncle, under",
+      "answers": ["uncle", "oncle", "under"],
+      "correctAnswer": "uncle"
+  },
+  {
+      "qid": "p1u2-a13",
+      "questionType": "audio",
+      "question": "nephew, niece, liece",
+      "answers": ["nephew", "niece", "liece"],
+      "correctAnswer": "niece"
+  },
+  {
+      "qid": "p1u2-a14",
+      "questionType": "audio",
+      "question": "naphew, nephew, niece",
+      "answers": ["naphew", "nephew", "niece"],
+      "correctAnswer": "nephew"
+  },
+  {
+      "qid": "p1u2-a15",
+      "questionType": "audio",
+      "question": "coussins, cushions, cousins",
+      "answers": ["coussins", "cushions", "cousins"],
+      "correctAnswer": "cousins"
+  },
+  {
+      "qid": "p1u2-a16",
+      "questionType": "audio",
+      "question": "siblings, sibbings, sibings",
+      "answers": ["siblings", "sibbings", "sibings"],
+      "correctAnswer": "siblings"
+  },
+  {
+      "qid": "p1u2-a17",
+      "questionType": "audio",
+      "question": "triplets, sons, twins",
+      "answers": ["triplets", "sons", "twins"],
+      "correctAnswer": "twins"
+  },
+  {
+      "qid": "p1u2-a18",
+      "questionType": "audio",
+      "question": "triplets, son, twins",
+      "answers": ["triplets", "son", "twins"],
+      "correctAnswer": "son"
+  },
+  {
+      "qid": "p1u2-a19",
+      "questionType": "audio",
+      "question": "daughter, doctor, daughtor",
+      "answers": ["daughter", "doctor", "daughtor"],
+      "correctAnswer": "daughter"
+  },
+  {
+      "qid": "p1u2-a20",
+      "questionType": "audio",
+      "question": "grantchildren, grandchilldren, grandchildren",
+      "answers": ["grantchildren", "grandchilldren", "grandchildren"],
+      "correctAnswer": "grandchildren"
+  },
+  {
+    "qid": "p2u3-e1",
+    "questionType": "text",
+    "question": "We come here for talks, ceremonies or shows.",
+    "answers": ["library", "hall", "playground"],
+    "correctAnswer": "hall"
+  },
+  {
+      "qid": "p2u3-e2",
+      "questionType": "text",
+      "question": "I need to do some research on how many countries there are in the world.",
+      "answers": ["music room", "art room", "computer room"],
+      "correctAnswer": "computer room"
+  },
+  {
+      "qid": "p2u3-e3",
+      "questionType": "text",
+      "question": "I think I ate something wrong. I am having a stomachache.",
+      "answers": ["toilet", "lift", "classroom"],
+      "correctAnswer": "toilet"
+  },
+  {
+      "qid": "p2u3-e4",
+      "questionType": "text",
+      "question": "I didn't have breakfast this morning. I am hungry.",
+      "answers": ["garden", "tuck shop", "sick room"],
+      "correctAnswer": "tuck shop"
+  },
+  {
+      "qid": "p2u3-e5",
+      "questionType": "text",
+      "question": "The bell is ringing. We need to have English lesson now.",
+      "answers": ["classroom", "music room", "computer room"],
+      "correctAnswer": "classroom"
+  },
+  {
+      "qid": "p2u3-e6",
+      "questionType": "text",
+      "question": "Mary wants to borrow the book 'The Little Prince'.",
+      "answers": ["hall", "library", "playground"],
+      "correctAnswer": "library"
+  },
+  {
+      "qid": "p2u3-e7",
+      "questionType": "text",
+      "question": "It rained this morning. Be careful when playing badminton.",
+      "answers": ["garden", "classroom", "playground"],
+      "correctAnswer": "playground"
+  },
+  {
+      "qid": "p2u3-e8",
+      "questionType": "text",
+      "question": "Do you know there are beautiful pink roses? Let’s go check it out!",
+      "answers": ["garden", "classroom", "playground"],
+      "correctAnswer": "garden"
+  },
+  {
+      "qid": "p2u3-e9",
+      "questionType": "text",
+      "question": "Nicole broke her legs. She can't walk up stairs.",
+      "answers": ["stairs", "toilet", "lift"],
+      "correctAnswer": "lift"
+  },
+  {
+      "qid": "p2u3-e10",
+      "questionType": "text",
+      "question": "Good morning, class. Today we are going to make a Lego robot.",
+      "answers": ["art room", "music room", "STEAM room"],
+      "correctAnswer": "STEAM room"
+  }
+  ]
 }

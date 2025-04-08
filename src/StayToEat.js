@@ -588,6 +588,7 @@ export default {
     }
 
     switch (this.randomQuestion.QuestionType) {
+      case 'fillInBlank':
       case 'text':
         this.questionWrapper.classList.add('questionFillBlankWrapper');
         questionBg.classList.add('questionImgBg');

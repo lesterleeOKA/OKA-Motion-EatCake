@@ -29,6 +29,7 @@
   height: calc(min(20.5vh, 20.5vw));
   width: 100%;
   bottom: calc(min(12vh, 12vw));
+  opacity: 0;
 }
 .instructionWrapper > .instructionBoard> .gameTextTitle {
   position: relative;

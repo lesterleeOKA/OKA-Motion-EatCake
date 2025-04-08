@@ -257,9 +257,9 @@ function gameSetup() {
   View.setRuleContent(ruleContent);
 
   let ruleHints = languagesContent(
-    "Just move your head left or right to bump words.",
-    "只需移動頭部左或右即可碰撞單字。",
-    "只需移动头部左或右即可碰撞单字。"
+    "Just move your head left or right to select words.",
+    "只需移動頭部左或右即可選擇單字。",
+    "只需移动头部左或右即可选择单字。"
   );
   View.setRuleHints(ruleHints);
 
