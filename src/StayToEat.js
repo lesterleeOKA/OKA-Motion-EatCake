@@ -14,7 +14,6 @@ export default {
   time: 0,
   remainingTime: 0,
   fallingSpeed: 0,
-  fallingOption: null,
   timer: null,
   timerRunning: false,
   nextQuestion: true,
@@ -36,11 +35,9 @@ export default {
   leftCount: 0,
   rightCount: 0,
   fallingDelay: 0,
-  finishedCreateOptions: false,
   eachQAMark: 0,
   isPlayLastTen: false,
   isTriggeredBackSpace: false,
-  selectedCount: 0,
   columnWidth: 0,
   numberOfColumns: 4,
   wholeScreenColumnSeperated: false,
@@ -48,7 +45,6 @@ export default {
   apiManager: null,
   itemDelay: 0,
   lang: null,
-  firstFall: true,
   engFontSize: null,
   boxStatus: null,
   maxBoxes: 4,
@@ -97,7 +93,6 @@ export default {
     View.stageImg.innerHTML = '';
     View.optionArea.innerHTML = '';
     document.addEventListener('visibilitychange', this.handleVisibilityChange.bind(this));
-    this.finishedCreateOptions = false;
     this.eachQAMark = 10;
     View.hideSuccess();
     View.hideFailure();
@@ -110,10 +105,8 @@ export default {
     this.isPlayLastTen = false;
     this.isTriggeredBackSpace = false;
     this.starNum = 0;
-    this.selectedCount = 0;
     this.apiManager = State.apiManager;
     this.resetProgressBar();
-    this.firstFall = true;
     this.boxStatus = new Array(this.maxBoxes).fill(false);
     this.boxesArea = [];
   },
@@ -131,7 +124,6 @@ export default {
   pauseGame() {
     if (this.timerRunning && this.startedGame) {
       clearTimeout(this.timer);
-      cancelAnimationFrame(this.fallingOption);
       this.timerRunning = false;
       this.showQuestions(false);
       this.isPlayLastTen = false;
@@ -273,44 +265,7 @@ export default {
       this.timerRunning = true;
       this.finishedCreateOptions = false;
       this.countTime();
-      //this.startFalling();
     }
-  },
-
-  startFalling() {
-    const falling = (timestamp) => {
-      if (!this.lastFallingTime) this.lastFallingTime = timestamp;
-      const elapsed = timestamp - this.lastFallingTime;
-      let currentDelay = this.fallingDelay;
-      //logController.log(this.finishedCreateOptions);
-      if (elapsed >= currentDelay) {
-        if (!this.finishedCreateOptions && this.randomPair.length > 0) {
-          if (this.firstFall) {
-            this.selectedCount = this.getRandomInt(-1, this.numberOfColumns - 1);
-            this.firstFall = false;
-          }
-          if (this.objectItems.length < this.randomPair.length) {
-            if (this.createdOptionId < this.objectItems.length) {
-              this.createdOptionId += 1;
-            } else {
-              this.createdOptionId = 0;
-            }
-            var optionImageId = this.createdOptionId % View.preloadedFallingImages.length;
-            this.createRandomItem(this.randomPair[this.createdOptionId], View.preloadedFallingImages[optionImageId]);
-          }
-          else {
-            this.finishedCreateOptions = true;
-            //logController.log("finished created all");
-          }
-        }
-        this.lastFallingTime = timestamp;
-      }
-
-      if (this.timerRunning) {
-        this.fallingOption = requestAnimationFrame(falling);
-      }
-    };
-    this.fallingOption = requestAnimationFrame(falling);
   },
 
   countTime() {
@@ -342,7 +297,6 @@ export default {
   stopCountTime() {
     if (this.timerRunning) {
       clearInterval(this.timer);
-      cancelAnimationFrame(this.fallingOption);
       this.timerRunning = false;
       this.showQuestions(false);
     }
@@ -370,26 +324,26 @@ export default {
 
   },
   createRandomItem(char, optionImage) {
-    if (char && char.length !== 0 && this.boxesArea.length !== 0) {
+    if (char && char.length !== 0 && this.boxesArea.length !== 0 && this.boxesArea) {
       //console.log(this.boxesArea);
       const enabledBoxes = this.boxesArea.filter((box, index) => this.boxStatus[index]);
-      if (this.boxesArea.length === 0 || !this.boxesArea) {
-        console.warn("No enabled boxes available.");
-        return;
-      }
 
       if (!this.createdOptionId || this.createdOptionId >= enabledBoxes.length) {
         this.createdOptionId = 0;
       }
       const selectedBox = enabledBoxes[this.createdOptionId];
+      const id = selectedBox.id;
+      const x = selectedBox.x;
+      const size = selectedBox.width;
+
+      this.renderOptionOutline(size, x, id);
+      this.renderPlateItem(size, x);
 
       const word = char;
       const generatePosition = () => {
         const x = selectedBox.x + selectedBox.width * 0.093;
         const size = selectedBox.width * 0.8;
-        const id = selectedBox.id;
         const optionWrapper = this.createOptionWrapper(word, id, size, optionImage, this.createdOptionId);
-
         const newObjectItem = {
           x,
           size: size,
@@ -405,15 +359,6 @@ export default {
       this.objectItems.push(newObjectItem);
       this.renderItem(newObjectItem);
     }
-  },
-  getNextSordOrder() {
-    if (this.selectedCount < this.numberOfColumns - 1)
-      this.selectedCount += 1;
-    else
-      this.selectedCount = 0;
-
-    //logController.log("new randomw id", this.selectedCount);
-    return this.selectedCount;
   },
   generatePositionX(columnId) {
     if (this.wholeScreenColumnSeperated) {
@@ -479,13 +424,10 @@ export default {
     }
 
     optionWrapper.appendChild(option);
-
-    requestAnimationFrame(() => {
-      let fontSize = this.engFontSize;
-      let lineHeightMultiplier = 1;
-      option.style.fontSize = `${fontSize}px`;
-      option.style.lineHeight = `${fontSize * lineHeightMultiplier}px`;
-    });
+    let fontSize = this.engFontSize;
+    let lineHeightMultiplier = 1;
+    option.style.fontSize = `${fontSize}px`;
+    option.style.lineHeight = `${fontSize * lineHeightMultiplier}px`;
     return optionWrapper;
   },
   getRandomQuestions(string) {
@@ -497,19 +439,24 @@ export default {
     item.optionWrapper.classList.add("show");
     item.optionWrapper.style.left = item.x + 'px';
   },
-  renderOptionOutline(size, positionX) {
+  renderOptionOutline(size, positionX, id) {
     var outline = document.createElement('div');
     outline.classList.add("optionOutline");
     View.optionArea.appendChild(outline);
+    outline.id = "outlineId_"+ id;
     outline.style.width = size + 'px';
     outline.style.height = size * 2.5 + 'px';
     outline.style.left = positionX + 'px';
 
     var progressBar = document.createElement('div');
     progressBar.classList.add("optionProgressBar");
+    var progress = document.createElement('div');
+    progress.classList.add("progressIndicator");
+    progress.id = "progressId_"+ id;
+    progressBar.appendChild(progress);
     View.optionArea.appendChild(progressBar);
-    progressBar.style.width = size * 0.5 + 'px';
-    progressBar.style.height = size * 0.3 + 'px';
+    progressBar.style.width = size * 0.85 + 'px';
+    progressBar.style.height = size * 0.12 + 'px';
     progressBar.style.left = positionX + 'px';
   },
   renderPlateItem(size, positionX) {
@@ -739,19 +686,11 @@ export default {
     table.classList.add("table");
     View.optionArea.appendChild(table);
 
-    for (let i = 0; i < this.maxBoxes; i++) {
-      const selectedBox = this.boxesArea[i];
-      const x = selectedBox.x;
-      const size = selectedBox.width;
-
-      this.renderOptionOutline(size, x);
-      this.renderPlateItem(size, x);
-    }
-
     for (let i = 0; i < this.randomPair.length; i++) {
       var optionImageId = i % View.preloadedFallingImages.length;
       this.createRandomItem(this.randomPair[i], View.preloadedFallingImages[optionImageId]);
     }
+
     State.changeState('playing', 'waitAns');
   },
 
@@ -828,8 +767,12 @@ export default {
           }
         }
         else {
-          option.classList.remove('show');
-          this.typedItems.push(option);
+          option.classList.add('hide');
+          setTimeout(() => {
+            option.classList.remove('show');  // Remove the show class
+          }, 500);
+          //option.classList.remove('show');
+          //this.typedItems.push(option);
         }
 
         this.fillwordTime += 1;
@@ -878,8 +821,6 @@ export default {
     }
   },
   clearWrapper() {
-    this.firstFall = true;
-    this.finishedCreateOptions = false;
     this.createdOptionId = 0;
     this.leftCount = 0;
     this.rightCount = 0;
@@ -890,10 +831,8 @@ export default {
     this.objectItems.splice(0);
     View.optionArea.innerHTML = '';
     this.typedItems.splice(0);
-    this.selectedCount = 0;
   },
   clearOption() {
-    this.firstFall = true;
     this.createdOptionId = 0;
     this.leftCount = 0;
     this.rightCount = 0;
@@ -901,7 +840,6 @@ export default {
     this.objectItems.splice(0);
     View.optionArea.innerHTML = '';
     this.typedItems.splice(0);
-    this.selectedCount = 0;
   },
   moveToNextQuestion() {
     View.preloadedFallingImages.sort(() => Math.random() - 0.5);
