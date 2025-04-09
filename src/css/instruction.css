@@ -62,7 +62,7 @@
   flex-direction: column;
 }
 .instructionWrapper > .instructionBoard > .previewImage {
-  background-image: url(../images/headToWin/mhead_preview.png);
+  background-image: url(../images/StayToEat/preview.png);
   background-repeat: no-repeat;
   background-position: center;
   background-size: contain;
