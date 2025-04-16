@@ -8,8 +8,21 @@
 .canvasWrapper > .helmet{
   position: absolute;
   display: none;
+  background-image: url(../images/StayToEat/nose.png);
+  background-size: contain;
+  background-repeat: no-repeat;;
   width: calc(min(10vh, 10vw));
   height: auto;
+}
+
+.canvasWrapper > .helmet > .foodAnimated{
+  position: relative;
+  top: calc(min(-3.5vh, -3.5vw));
+  left: calc(min(-3.5vh, -3.5vw));
+  width: calc(min(35vh, 35vw));
+  height: auto;
+  filter: drop-shadow(2px 2px 2px rgba(0, 0, 0, 0.3));
+  opacity: 0;
 }
 
 .canvasWrapper > .optionArea {
@@ -34,6 +47,7 @@
   background-size: contain;
   background-repeat: no-repeat;
   transition: background 0.3s ease;
+  opacity: 1;
   z-index: 2;
 }
 .canvasWrapper > .optionArea > .optionOutline.outline {
@@ -345,11 +359,11 @@ font-size: calc(min(7vh, 7vw));
   justify-content: center;
   align-items: center;
   transform: scale(1);
-  transition: transform 0.5s ease, opacity 0.5s ease; /* Smooth transitions */
+  transition: transform 1s ease, opacity 1s ease; /* Smooth transitions */
 }
 .canvasWrapper > .optionArea > .optionWrapper.hide {
   opacity: 0;
-  transform: scale(0);
+  transform: scale(0.5) translateY(-100%);
 }
 
 .canvasWrapper > .optionArea > .optionWrapper.spin {

@@ -62,6 +62,7 @@ export default {
   selectCounts: document.querySelectorAll('.canvasWrapper > .optionArea > .optionWrapper > .selectCount'),
 
   headTracker: document.getElementById('head'),
+  eatAnimated: document.getElementById('foodAnimated'),
   playerIcon: document.getElementById('userIcon'),
   fpsModeBtn: document.getElementById('fpsButton'),
   gameTitle: document.getElementById('game-title'),
@@ -379,6 +380,14 @@ export default {
     if (top) this.headTracker.style.top = top;
     this.headTracker.style.transform = `rotate(${rotation}deg)`;
     this.headTracker.style.display = status ? 'block' : 'none';
+  },
+
+  playEatAnimated() {
+    const duration = 1000;
+    this.eatAnimated.style.opacity = 1;
+    setTimeout(() => {
+      this.eatAnimated.style.opacity = 0;
+    }, duration);
   },
 
   setPlayerIcon(iconUrl = null) {

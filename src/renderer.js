@@ -124,54 +124,64 @@ export class RendererCanvas2d {
     }
 
     State.setPoseState('bodyInsideRedBox', !isBodyOutBox);
-      if (isBodyOutBox) {
-        if (State.state == 'playing') {
-          if (State.lang === "1" && State.lang) {
-            if (!State.isPlayingAudio) {
-              State.changeState('outBox', 'outBox');
-            }
-          } else {
+    if (isBodyOutBox) {
+      if (State.state == 'playing') {
+        if (State.lang === "1" && State.lang) {
+          if (!State.isPlayingAudio) {
             State.changeState('outBox', 'outBox');
           }
+        } else {
+          State.changeState('outBox', 'outBox');
         }
-        if (this.ctx) {
-          this.ctx.beginPath();
-          this.ctx.rect(0, 0, this.videoWidth, this.videoHeight);
-          this.ctx.strokeStyle = '#ff0000'; // Red color
-          this.ctx.lineWidth = Math.max(10, this.videoHeight * 0.01); // Set the line width if needed
-          this.ctx.stroke();
-        }
-        //logController.log('outBox', 'outBox');
-        this.drawHeadTracker(false);
-        return false;
       }
-      return true;
+      if (this.ctx) {
+        this.ctx.beginPath();
+        this.ctx.rect(0, 0, this.videoWidth, this.videoHeight);
+        this.ctx.strokeStyle = '#ff0000'; // Red color
+        this.ctx.lineWidth = Math.max(10, this.videoHeight * 0.01); // Set the line width if needed
+        this.ctx.stroke();
+      }
+      //logController.log('outBox', 'outBox');
+      this.drawHeadTracker(false);
+      return false;
+    }
+    return true;
   }
-  updateProgressBar(id, progress, reset=false) {
+  updateProgressBar(id, progress, reset = false) {
     let progressLeft;
     const progressIndicator = document.getElementById(`progressId_${id}`);
     if (progressIndicator) {
-        progressLeft = Math.min(progress, 100); // Ensure progress doesn't exceed 100%
-        progressIndicator.style.transition = reset? 'none' : 'left 0s linear';
-        progressIndicator.style.left = `${progressLeft - 100}%`; // Move from -100% to 0%
+      progressLeft = Math.min(progress, 100); // Ensure progress doesn't exceed 100%
+      progressIndicator.style.transition = reset ? 'none' : 'left 0s linear';
+      progressIndicator.style.left = `${progressLeft - 100}%`; // Move from -100% to 0%
     }
+    this.updateOutline(id, progressLeft, reset);
+  }
+  updateOutline(id, progressLeft, resetOutline = false, hidden = false) {
     const outline = document.getElementById(`outlineId_${id}`);
-    if (outline) {
-        if (reset) {
-            // Remove outline class if it's a reset
-            if (outline.classList.contains('outline')) {
-                outline.classList.remove('outline');
-            }
+    if (hidden) {
+      outline.style.opacity = 0;
+    }
+    else {
+      if (outline) {
+        if (resetOutline) {
+          // Remove outline class if it's a reset
+          //outline.style.opacity = 1;
+          if (outline.classList.contains('outline')) {
+            outline.classList.remove('outline');
+          }
         } else {
-            // Add outline class based on current progress
-            if (progressLeft > 0) {
-                outline.classList.add('outline');
-            } else {
-                outline.classList.remove('outline');
-            }
+          // Add outline class based on current progress
+          if (progressLeft > 0) {
+            outline.classList.add('outline');
+          } else {
+            outline.classList.remove('outline');
+          }
         }
+      }
     }
   }
+
   drawBox(isCurPoseValid = true, isFPSMode = false) {
     if (Game.boxStatus === null || !isCurPoseValid) return;
     const screenWidth = this.videoWidth;
@@ -193,44 +203,45 @@ export class RendererCanvas2d {
     //this.updateProgressBar(1, 100);
     this.boxes.forEach(box => {
       if (box.enable) {
-          if (this.headCircle &&
-              State.state == 'playing' && ['waitAns'].includes(State.stateType)) {
-              // Check if the head circle is within the box
-              if ((this.headCircle.x) > (box.x) &&
-                  (this.headCircle.x) < (box.x + box.width) &&
-                  (this.headCircle.y) > (box.y) &&
-                  (this.headCircle.y) < (box.y + box.height)
-              ) {
-                  State.setPoseState('selectedImg', box);
-                  this.boxesProgress[box.id] = Math.min(this.boxesProgress[box.id] + 1, 30);
-                  const progressPercentage = (this.boxesProgress[box.id] / 30) * 100;
-                  this.updateProgressBar(box.id, progressPercentage);
-              }
-              else {
-                  this.boxesProgress[box.id] = 0;
-                  this.updateProgressBar(box.id, 0, true);
-              }
-
-              if (this.boxesProgress[box.id] >= 30) {
-                box.touched = true;
-                Game.fillWord(box.id);
-              }
-              // Drawing the box with the progress visualized
-              if (isFPSMode || this.showSkeleton) {
-                  this.ctx.beginPath();
-                  this.ctx.setLineDash([5, 5]); // Dashed line style
-                  this.ctx.rect(box.x, box.y, box.width, box.height);
-                  this.ctx.strokeStyle = box.touched ? 'green' : '#000000'; // Outline color
-                  this.ctx.stroke();
-              }
+        if (this.headCircle &&
+          State.state == 'playing' && ['waitAns'].includes(State.stateType)) {
+          // Check if the head circle is within the box
+          if ((this.headCircle.x) > (box.x) &&
+            (this.headCircle.x) < (box.x + box.width) &&
+            (this.headCircle.y) > (box.y) &&
+            (this.headCircle.y) < (box.y + box.height)
+          ) {
+            State.setPoseState('selectedImg', box);
+            this.boxesProgress[box.id] = Math.min(this.boxesProgress[box.id] + 1, 30);
+            const progressPercentage = (this.boxesProgress[box.id] / 30) * 100;
+            this.updateProgressBar(box.id, progressPercentage);
           }
           else {
-              // Reset progress and update progress bar to 0 if not in the specified state
-              this.boxesProgress[box.id] = 0;
-              this.updateProgressBar(box.id, 0, true);
+            this.boxesProgress[box.id] = 0;
+            this.updateProgressBar(box.id, 0, true);
           }
+
+          if (this.boxesProgress[box.id] >= 30) {
+            box.touched = true;
+            this.updateOutline(box.id, null, false, true);
+            Game.fillWord(box.id);
+          }
+          // Drawing the box with the progress visualized
+          if (isFPSMode || this.showSkeleton) {
+            this.ctx.beginPath();
+            this.ctx.setLineDash([5, 5]); // Dashed line style
+            this.ctx.rect(box.x, box.y, box.width, box.height);
+            this.ctx.strokeStyle = box.touched ? 'green' : '#000000'; // Outline color
+            this.ctx.stroke();
+          }
+        }
+        else {
+          // Reset progress and update progress bar to 0 if not in the specified state
+          this.boxesProgress[box.id] = 0;
+          this.updateProgressBar(box.id, 0, true);
+        }
       }
-  });
+    });
 
     Game.boxesArea = this.boxes;
   }

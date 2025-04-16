@@ -443,7 +443,7 @@ export default {
     var outline = document.createElement('div');
     outline.classList.add("optionOutline");
     View.optionArea.appendChild(outline);
-    outline.id = "outlineId_"+ id;
+    outline.id = "outlineId_" + id;
     outline.style.width = size + 'px';
     outline.style.height = size * 2.5 + 'px';
     outline.style.left = positionX + 'px';
@@ -452,7 +452,7 @@ export default {
     progressBar.classList.add("optionProgressBar");
     var progress = document.createElement('div');
     progress.classList.add("progressIndicator");
-    progress.id = "progressId_"+ id;
+    progress.id = "progressId_" + id;
     progressBar.appendChild(progress);
     View.optionArea.appendChild(progressBar);
     progressBar.style.width = size * 0.85 + 'px';
@@ -769,22 +769,24 @@ export default {
         }
         else {
           option.classList.add('hide');
+          if (State.isSoundOn) {
+            Sound.stopAll(['bgm', 'lastTen']);
+            Sound.play('btnClick');
+          }
           setTimeout(() => {
-            option.classList.remove('show');  // Remove the show class
+            option.classList.remove('show');
+            if (State.isSoundOn) {
+              Sound.stopAll(['bgm', 'lastTen']);
+              Sound.play('eat');
+            }
+            View.playEatAnimated();
+            this.fillwordTime += 1;
+            if (this.fillwordTime == this.answerLength) {
+              setTimeout(() => {
+                this.checkAnswer(this.answerWrapper.textContent);
+              }, 1000);
+            }
           }, 500);
-          //option.classList.remove('show');
-          //this.typedItems.push(option);
-        }
-
-        this.fillwordTime += 1;
-        if (State.isSoundOn) {
-          Sound.stopAll(['bgm', 'lastTen']);
-          Sound.play('btnClick');
-        }
-        if (this.fillwordTime == this.answerLength) {
-          setTimeout(() => {
-            this.checkAnswer(this.answerWrapper.textContent);
-          }, 300);
         }
       }
     }

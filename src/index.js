@@ -353,7 +353,7 @@ async function init() {
     ['btnClick', require('./audio/btnClick.wav')],
     ['countDown', require('./audio/countDown.mp3')],
     ['score', require('./audio/score.mp3')],
-    //['instruction', require('./audio/instruction.mp3')],
+    ['eat', require('./audio/eat.mp3')],
     ['prepare', langAudioFiles.prepare[audioLang]],
     ['start', require('./audio/start.mp3')],
     /*['finished', require('./audio/finished.mp3')],*/
